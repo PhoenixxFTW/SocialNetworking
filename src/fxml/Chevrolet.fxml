@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.Rating?>
 
-<AnchorPane prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ChevroletController">
+<AnchorPane prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.ChevroletController">
    <children>
       <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="TOP" layoutX="60.0" layoutY="14.0" prefHeight="222.0" prefWidth="193.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="Chevrolet Beat" textFill="#f8f8f8">
          <font>

@@ -1,6 +1,5 @@
-package Controllers;
+package controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,13 +7,8 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class HomeController implements Initializable {
 
@@ -46,7 +40,7 @@ public class HomeController implements Initializable {
 	public void marutiAction(ActionEvent e)
 	{
 	  
-		HomePageController.getInstance().createPage(CarsAnchor, "/FXML/Maruti.fxml");
+		HomePageController.getInstance().createPage(CarsAnchor, "/fxml/Maruti.fxml");
 		
 	  
 	}
@@ -54,7 +48,7 @@ public class HomeController implements Initializable {
 	 @FXML
 	 public void chevroletAction(ActionEvent event) {
 
-		 HomePageController.getInstance().createPage(CarsAnchor, "/FXML/Chevrolet.fxml");
+		 HomePageController.getInstance().createPage(CarsAnchor, "/fxml/Chevrolet.fxml");
 		
 		 
 	  }
@@ -63,7 +57,7 @@ public class HomeController implements Initializable {
 	 public void hyundaiAction(ActionEvent event) {
 
 		
-		 HomePageController.getInstance().createPage(CarsAnchor, "/FXML/Hyundai.fxml");
+		 HomePageController.getInstance().createPage(CarsAnchor, "/fxml/Hyundai.fxml");
 		 	  
 	 }
 
@@ -71,7 +65,7 @@ public class HomeController implements Initializable {
 	  @FXML
 	  public void tataMotorsAction(ActionEvent event) {
 
-		  HomePageController.getInstance().createPage(CarsAnchor, "/FXML/TataMotors.fxml");
+		  HomePageController.getInstance().createPage(CarsAnchor, "/fxml/TataMotors.fxml");
 		   
 	   }
 	

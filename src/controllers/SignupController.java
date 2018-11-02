@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 
 import java.io.IOException;
@@ -20,7 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import DBConnection.DBHandler;
+import dBConnection.DBHandler;
 
 public class SignupController implements Initializable {
 	  
@@ -129,7 +129,7 @@ public class SignupController implements Initializable {
     	
     	 Stage login = new Stage();
     	 
-		 Parent root = FXMLLoader.load(getClass().getResource("/FXML/LoginMain.fxml"));
+		 Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginMain.fxml"));
          Scene scene = new Scene(root);
          login.setScene(scene);
          login.show();

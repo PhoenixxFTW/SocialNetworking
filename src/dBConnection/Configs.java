@@ -1,4 +1,4 @@
-package DBConnection;
+package dBConnection;
 
 public class Configs {
 

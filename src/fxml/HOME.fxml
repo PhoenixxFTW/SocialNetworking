@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="homeAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomeController">
+<AnchorPane fx:id="homeAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomeController">
    <children>
       <JFXButton fx:id="maruti" buttonType="RAISED" contentDisplay="TOP" layoutX="40.0" layoutY="38.0" onAction="#marutiAction" prefHeight="177.0" prefWidth="200.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="MARUTI SUZUKI" textFill="#f8f8f8">
          <graphic>

@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,76 +18,67 @@ import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import DBConnection.DBHandler;
+import dBConnection.DBHandler;
 
-public class LoginController implements Initializable{
+public class LoginController implements Initializable {
 
-	    @FXML
-	    private JFXButton signup;
+	@FXML
+	private JFXButton signup;
 
-	    @FXML
-	    public JFXTextField username;
+	@FXML
+	public JFXTextField username;
 
-	    @FXML
-	    private JFXCheckBox remember;
+	@FXML
+	private JFXCheckBox remember;
 
-	    @FXML
-	    private JFXButton login;
+	@FXML
+	private JFXButton login;
 
-	    @FXML
-	    private JFXButton forgotpassword;
+	@FXML
+	private JFXButton forgotpassword;
 
-	    @FXML
-	    private ImageView progress;
+	//@FXML
+	//private ImageView progress;
 
-	    @FXML
-	    private JFXPasswordField password;
+	@FXML
+	private JFXPasswordField password;
 
-	    private DBHandler handler;
-	    private Connection connection;
-	    private java.sql.PreparedStatement pst;
-	    private static LoginController instance;
-	    
-	    public LoginController()
-	    {
-	    	instance = this;
-	    }
-	    
-	    public static LoginController getInstance()
-	    {
-	    	return instance;
-	    }
-	    
-	    
-	    public String username()
-	    {
-	    	return username.getText();
-	    }
-	    
-	    
-	    
+	private DBHandler handler;
+	private Connection connection;
+	private java.sql.PreparedStatement pst;
+	private static LoginController instance;
+
+	public LoginController()
+	{
+		instance = this;
+	}
+
+	public static LoginController getInstance()
+	{
+		return instance;
+	}
+
+
+	public String username()
+	{
+		return username.getText();
+	}
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		progress.setVisible(false);
+		//progress.setVisible(false);
 		username.setStyle("-fx-text-inner-color: #a0a2ab;");
 		password.setStyle("-fx-text-inner-color: #a0a2ab;");
 		
 		handler = new DBHandler();
-	    
-			
 	}
 
-	
-	
-	
 	@FXML
-	public void loginAction(ActionEvent e)
-	{ 
-		
-		
+	public void signInAction(ActionEvent e)
+	{
 		//loading bar
-		progress.setVisible(true);
+		//progress.setVisible(true);
 		PauseTransition pt = new PauseTransition();
 		pt.setDuration(Duration.seconds(3));
 		pt.setOnFinished(ev -> {
@@ -117,7 +108,7 @@ public class LoginController implements Initializable{
 			    	Stage home = new Stage();
 			    	try {
 			    		
-						Parent root = FXMLLoader.load(getClass().getResource("/FXML/HomePage.fxml"));
+						Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomePage.fxml"));
 						
 					    Scene scene = new Scene(root);
 					    home.setScene(scene);
@@ -136,7 +127,7 @@ public class LoginController implements Initializable{
 			    	alert.setHeaderText(null);
 			    	alert.setContentText("Username and Password Is Not Correct");
 			    	alert.show();
-			    	progress.setVisible(false);
+			    	//progress.setVisible(false);
 			    }
 			    
 
@@ -165,19 +156,21 @@ public class LoginController implements Initializable{
 	}
 	
 	@FXML
-	public void signUp(ActionEvent e1) throws IOException
+	public void signUpAction(ActionEvent e1) throws IOException
 	{
 		login.getScene().getWindow().hide();
 		
 		Stage signup = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/FXML/SignUP.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/fxml/SignUP.fxml"));
 		Scene scene = new Scene(root);
 		signup.setScene(scene);
 		signup.show();
 		signup.setResizable(false);
-		
-		
 	}
-	
-	
+
+	@FXML
+	public void forgotPassAction(ActionEvent e1) throws IOException
+	{
+
+	}
 }

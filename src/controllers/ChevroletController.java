@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class ChevroletController implements Initializable {
 		@FXML 
 		public void backAction(ActionEvent e)
 		{
-			HomePageController.getInstance().createPage(CarInfo, "/FXML/HOME.fxml");
+			HomePageController.getInstance().createPage(CarInfo, "/fxml/HOME.fxml");
 		}
 	
 }

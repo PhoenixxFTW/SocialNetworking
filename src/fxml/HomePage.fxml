@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.HomePageController">
+<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.HomePageController">
    <children>
       <JFXToolbar fx:id="toolBar" layoutX="186.0" prefHeight="50.0" prefWidth="569.0" style="-fx-background-color: #36394B;" styleClass="toolbar">
          <right>

@@ -1,4 +1,4 @@
-package Controllers;
+package controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,7 +81,7 @@ public class HomePageController implements Initializable {
 	   toolBarRight.getChildren().add(rippler);
 	  
 	   openMenus();
-       createPage(home,"/FXML/HOME.fxml");
+       createPage(home, "/fxml/HOME.fxml");
       
        setUsername(LoginController.getInstance().username());
       
@@ -159,7 +159,7 @@ public class HomePageController implements Initializable {
    	    Stage login = new Stage();
    	    Parent root;
 		try {
-			root = FXMLLoader.load(getClass().getResource("/FXML/LoginMain.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/fxml/LoginMain.fxml"));
 		
         Scene scene = new Scene(root);
         login.setScene(scene);

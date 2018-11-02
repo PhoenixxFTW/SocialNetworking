@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.*?>
@@ -8,7 +10,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1177.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1177.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.LoginController">
    <children>
       <Label layoutX="465.0" layoutY="19.0" text="Phoenix" textFill="#2196f3">
          <font>
@@ -20,8 +22,8 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <JFXButton layoutX="1093.0" layoutY="21.0" style="-fx-background-color: #151928;" text="Sign up" textFill="#a0a2ab" />
-      <JFXButton layoutX="674.0" layoutY="395.0" style="-fx-background-color: #3C58FA;" text="Sign in" textFill="#a0a2ab">
+      <JFXButton fx:id="signUpButton" layoutX="1093.0" layoutY="21.0" onAction="#signUpAction" style="-fx-background-color: #151928;" text="Sign up" textFill="#a0a2ab" />
+      <JFXButton fx:id="signInButton" layoutX="674.0" layoutY="395.0" onAction="#signInAction" style="-fx-background-color: #3C58FA;" text="Sign in" textFill="#a0a2ab">
          <font>
             <Font size="20.0" />
          </font>
@@ -36,7 +38,7 @@
             <Font size="20.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="forgotpassword" layoutX="493.0" layoutY="455.0" prefHeight="30.0" prefWidth="192.0" text="Forgot password?" textFill="#a0a2ab" underline="true">
+      <JFXButton fx:id="forgotpassword" layoutX="493.0" layoutY="455.0" onAction="#forgotPassAction" prefHeight="30.0" prefWidth="192.0" text="Forgot password?" textFill="#a0a2ab" underline="true">
          <font>
             <Font size="14.0" />
          </font>
