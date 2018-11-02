@@ -22,12 +22,6 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <JFXButton fx:id="signUpButton" layoutX="1093.0" layoutY="21.0" onAction="#signUpAction" style="-fx-background-color: #151928;" text="Sign up" textFill="#a0a2ab" />
-      <JFXButton fx:id="signInButton" layoutX="674.0" layoutY="395.0" onAction="#signInAction" style="-fx-background-color: #3C58FA;" text="Sign in" textFill="#a0a2ab">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </JFXButton>
       <Label layoutX="957.0" layoutY="23.0" text="Not registered yet?" textFill="#a0a2ab">
          <font>
 
@@ -35,25 +29,34 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="username" focusColor="#a0a2ab" layoutX="396.0" layoutY="226.0" prefHeight="44.0" prefWidth="385.0" promptText="Username" unFocusColor="#a0a2ab">
+      <JFXButton fx:id="signUpButton" layoutX="1093.0" layoutY="21.0" onAction="#signUpAction" style="-fx-background-color: #151928;" text="Sign up" textFill="#a0a2ab" />
+      <JFXButton fx:id="signInButton" layoutX="674.0" layoutY="395.0" onAction="#signInAction" style="-fx-background-color: #3C58FA;" text="Sign in" textFill="#a0a2ab">
          <font>
             <Font size="20.0" />
          </font>
-      </JFXTextField>
+      </JFXButton>
       <JFXButton fx:id="forgotpassword" layoutX="493.0" layoutY="455.0" onAction="#forgotPassAction" prefHeight="30.0" prefWidth="192.0" text="Forgot password?" textFill="#a0a2ab" underline="true">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXCheckBox fx:id="remember" layoutX="407.0" layoutY="407.0" text="Remember me" textFill="#a0a2ab" unCheckedColor="#a0a2ab">
+      <JFXTextField fx:id="username" focusColor="#a0a2ab" layoutX="396.0" layoutY="226.0" prefHeight="44.0" prefWidth="385.0" promptText="Username" unFocusColor="#a0a2ab">
          <font>
-            <Font size="14.0" />
+            <Font size="20.0" />
          </font>
-      </JFXCheckBox>
+      </JFXTextField>
       <JFXPasswordField fx:id="password" layoutX="396.0" layoutY="312.0" prefHeight="44.0" prefWidth="385.0" promptText="Password" unFocusColor="#a0a2ab">
          <font>
             <Font size="18.0" />
          </font>
       </JFXPasswordField>
+      <JFXCheckBox fx:id="remember" layoutX="407.0" layoutY="407.0" text="Remember me" textFill="#a0a2ab" unCheckedColor="#a0a2ab">
+         <font>
+            <Font size="14.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Don't save your password on public computers!" />
+         </tooltip>
+      </JFXCheckBox>
    </children>
 </AnchorPane>
