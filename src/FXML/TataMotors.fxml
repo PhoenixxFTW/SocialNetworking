@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.Rating?>
+
+<AnchorPane prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.TataMotorsController">
+   <children>
+      <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="TOP" layoutX="60.0" layoutY="14.0" prefHeight="222.0" prefWidth="193.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="Tata Nano GenX" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/Tatamotos/Tata-Nano-GenX-Right-Front-Three-Quarter-51780_ol.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="82.0" layoutY="150.0" prefHeight="32.0" prefWidth="150.0" text="₹ 2.36 Lakhs onwards" textFill="#f8f8f8">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Rating layoutX="69.0" layoutY="182.0" prefHeight="16.0" prefWidth="136.0" rating="3.0" />
+      <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="TOP" layoutX="310.0" layoutY="14.0" prefHeight="222.0" prefWidth="193.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="Tata Tiago" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/Tatamotos/Tata-Tiago-Right-Front-Three-Quarter-70545.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="340.0" layoutY="150.0" prefHeight="32.0" prefWidth="150.0" text="₹ 3.26 Lakhs onwards" textFill="#f8f8f8">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Rating layoutX="319.0" layoutY="182.0" prefHeight="16.0" prefWidth="136.0" rating="4.0" />
+      <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="TOP" layoutX="60.0" layoutY="259.0" prefHeight="222.0" prefWidth="193.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="Tata Zest" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/Tatamotos/Tata-Zest-Right-Front-Three-Quarter-48864_ol.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="82.0" layoutY="394.0" prefHeight="32.0" prefWidth="150.0" text="₹ 5.22 Lakhs onwards" textFill="#f8f8f8">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Rating layoutX="69.0" layoutY="432.0" prefHeight="16.0" prefWidth="136.0" rating="3.0" />
+      <JFXButton alignment="TOP_RIGHT" buttonType="RAISED" contentDisplay="TOP" layoutX="311.0" layoutY="259.0" prefHeight="222.0" prefWidth="193.0" style="-fx-border-color: #FFFFFF; -fx-background-color: #373C4F;" text="Tata Indica V2" textFill="#f8f8f8">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="173.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/Tatamotos/indica-v2.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <Label layoutX="340.0" layoutY="394.0" prefHeight="32.0" prefWidth="150.0" text="₹ 4.63 Lakhs onwards" textFill="#f8f8f8">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Rating layoutX="320.0" layoutY="432.0" prefHeight="16.0" prefWidth="136.0" />
+      <JFXButton fx:id="back" contentDisplay="GRAPHIC_ONLY" layoutX="517.0" onAction="#backAction" prefHeight="44.0" prefWidth="38.0" text="BACK">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Resources/Long%20Arrow%20Left_64px.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
