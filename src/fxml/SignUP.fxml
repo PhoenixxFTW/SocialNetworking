@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXRadioButton?>
@@ -11,9 +17,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="664.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignupController">
+<AnchorPane fx:id="parentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="664.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SignupController">
    <children>
-      <Label layoutX="264.0" layoutY="78.0" text="Car " textFill="#2196f3">
+      <Label layoutX="247.0" layoutY="78.0" text="Phoenix" textFill="#2196f3">
          <font>
             <Font name="Century Gothic" size="24.0" />
          </font>
@@ -42,12 +48,7 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <ImageView fitHeight="58.0" fitWidth="200.0" layoutX="303.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Resources/Car_100px.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="312.0" layoutY="78.0" text="Review" textFill="#a0a2ab">
+      <Label layoutX="343.0" layoutY="78.0" text="Studios" textFill="#a0a2ab">
          <font>
             <Font name="Century Gothic" size="24.0" />
          </font>
@@ -88,11 +89,6 @@
       <ImageView fitHeight="20.0" fitWidth="25.0" layoutX="188.0" layoutY="358.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../JavaFx%20GUI/Icons/Marker_52px.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="progress" fitHeight="85.0" fitWidth="200.0" layoutX="212.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../Resources/294-1.gif" />
          </image>
       </ImageView>
       <JFXPasswordField fx:id="password" focusColor="#a0a2ab" layoutX="218.0" layoutY="215.0" prefHeight="31.0" prefWidth="253.0" promptText="  Password" unFocusColor="#a0a2ab">

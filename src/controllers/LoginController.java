@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
 	private JFXCheckBox remember;
 
 	@FXML
-	private JFXButton login;
+	private JFXButton signInButton;
 
 	@FXML
 	private JFXButton forgotpassword;
@@ -76,7 +76,7 @@ public class LoginController implements Initializable {
 
 	@FXML
 	public void signInAction(ActionEvent e)
-	{
+    {
 		//loading bar
 		//progress.setVisible(true);
 		PauseTransition pt = new PauseTransition();
@@ -103,7 +103,7 @@ public class LoginController implements Initializable {
 			    
 			    if(count==1)
 			    {
-			    	login.getScene().getWindow().hide();
+                    signInButton.getScene().getWindow().hide();
 			    	
 			    	Stage home = new Stage();
 			    	try {
@@ -145,20 +145,17 @@ public class LoginController implements Initializable {
 					e1.printStackTrace();
 				}
 			}
-				
-			
-			
        });
 		
 		pt.play();
-		
-	
+
+
 	}
 	
 	@FXML
 	public void signUpAction(ActionEvent e1) throws IOException
 	{
-		login.getScene().getWindow().hide();
+        signInButton.getScene().getWindow().hide();
 		
 		Stage signup = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/fxml/SignUP.fxml"));
