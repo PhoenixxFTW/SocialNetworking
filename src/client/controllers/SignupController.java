@@ -1,165 +1,156 @@
 package client.controllers;
 
 
-import java.io.IOException;
+import client.dBConnection.DBHandler;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
+
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-import com.jfoenix.controls.*;
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.util.Duration;
-import client.dBConnection.DBHandler;
+import java.util.UUID;
 
-public class SignupController implements Initializable {
-	  
-	    @FXML
-	    private AnchorPane parentPane;
-	    
-	    @FXML
-	    private JFXButton login;
+public class SignupController implements Initializable
+{
 
-	    @FXML
-	    private JFXTextField name;
+    @FXML
+    private AnchorPane parentPane;
 
-	    @FXML
-	    private JFXButton signup;
+    @FXML
+    private JFXTextField full_name;
 
-	    @FXML
-	    private JFXRadioButton male;
+    @FXML
+    private JFXTextField student_number;
 
-	    @FXML
-	    private ToggleGroup genders;
+    @FXML
+    private JFXTextField email;
 
-	    @FXML
-	    private JFXRadioButton female;
+    @FXML
+    private JFXTextField username;
 
-	    @FXML
-	    private JFXRadioButton other;
+    @FXML
+    private JFXPasswordField password;
 
+    @FXML
+    private JFXPasswordField verified_password;
 
-	    @FXML
-	    private JFXTextField location;
+    @FXML
+    private Label passwordsDoNotMatch;
 
-	    @FXML
-	    private ImageView progress;
+    @FXML
+    private Rectangle passwordDetection;
 
-	    @FXML
-	    private JFXPasswordField password;
+    @FXML
+    private JFXButton registerButton;
 
-	    private Connection connection;
-	    private DBHandler handler;
-	    private PreparedStatement pst;
-	  
-	
+    private Connection connection;
+    private DBHandler handler;
+    private PreparedStatement pst;
+
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		progress.setVisible(false);
-		name.setStyle("-fx-text-inner-color: #a0a2ab;");
-	    password.setStyle("-fx-text-inner-color: #a0a2ab;");
-	    location.setStyle("-fx-text-inner-color: #a0a2ab;");
-	   
+	public void initialize(URL arg0, ResourceBundle arg1)
+    {
+        full_name.setStyle("-fx-text-inner-color: #a0a2ab;");
+        student_number.setStyle("-fx-text-inner-color: #a0a2ab;");
+        email.setStyle("-fx-text-inner-color: #a0a2ab;");
+        username.setStyle("-fx-text-inner-color: #a0a2ab;");
+        password.setStyle("-fx-text-inner-color: #a0a2ab;");
+        verified_password.setStyle("-fx-text-inner-color: #a0a2ab;");
+
 	    handler = new DBHandler(); 
 	}
+
+	@FXML
+    public void verifyPassTypedAction(ActionEvent e)
+    {
+        /*if(!password.getText().equals(verified_password.getText()))
+        {
+            passwordsDoNotMatch.setVisible(true);
+            passwordDetection.setVisible(true);
+        }*/
+    }
 		
 	@FXML
-	public void signupAction(ActionEvent e)
-	{  
-		    // loading bar
-		    progress.setVisible(true);	
-			PauseTransition pt = new PauseTransition();
-			pt.setDuration(Duration.seconds(3));
-			pt.setOnFinished(ev ->
-			{
-				
-				
-			});
-			pt.play();
-			
-		     
-			
-		    // Saving Data
-		
-		
-			String insert = "INSERT INTO youtubers(names,password,gender,location)" 
-					+ "VALUES (?,?,?,?)";
-					
-			connection = handler.getConnection();
-			try {
-				pst = connection.prepareStatement(insert);
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			
-			try {
-				pst.setString(1, name.getText());
-				pst.setString(2, password.getText());
-				pst.setString(3, getGender());
-                pst.setString(4, location.getText());				
-				
+	public void registerAction(ActionEvent e)
+	{
+        if(password.getText().equals(verified_password.getText()))
+        {
+            passwordsDoNotMatch.setVisible(false);
+            passwordDetection.setVisible(false);
+        } else {
+            System.out.println("passwords do not match! Main pass: " + password.getText() + " other pass: " + verified_password.getText());
+            passwordsDoNotMatch.setVisible(true);
+            passwordDetection.setVisible(true);
+        }
+
+	    if(!full_name.getText().isEmpty() && !student_number.getText().isEmpty() && !email.getText().isEmpty()/* && !password.getText().isEmpty() && !verified_password.getText().isEmpty()*/)
+	    {
+            String insert = "INSERT INTO users(uuid,student_number,username,full_name,email,password) VALUES (?,?,?,?,?,?)";
+
+            connection = handler.getConnection();
+            try {
+                pst = connection.prepareStatement(insert);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            try {
+                String uuid = generateUUID().toString();
+                String studentNumber = student_number.getText();
+                String usernameGiven = username.getText();
+                String fullName = full_name.getText();
+                String emailGiven = email.getText();
+                String passwordGiven = password.getText();
+
+                pst.setString(1, uuid);
+                pst.setString(2, studentNumber);
+                pst.setString(3, usernameGiven);
+                pst.setString(4, fullName);
+                pst.setString(5, emailGiven);
+                pst.setString(6, passwordGiven);
+
+                System.out.println("UUID: " + uuid);
+                System.out.println("student_number: " + studentNumber);
+                System.out.println("username: " + usernameGiven);
+                System.out.println("full_name: " + fullName);
+                System.out.println("email: " + emailGiven);
+                System.out.println("password: " + passwordGiven);
+
                 pst.executeUpdate();
-                
-				
-			} catch (SQLException e1) {
-			
-				e1.printStackTrace();
-			}
-			
-			
-			
+
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } else {
+            System.out.println("DATA IS EMPTY");
+        }
+
 	}
-	
-	 @FXML
-     public void loginAction(ActionEvent e) throws IOException
-     {
-    	 signup.getScene().getWindow().hide();
-    	 
-    	 progress.setVisible(false);
-    	
-    	 Stage login = new Stage();
-    	 
-		 Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/LoginMain.fxml"));
-         Scene scene = new Scene(root);
-         login.setScene(scene);
-         login.show();
-         login.setResizable(false);
-    	 
-     }
-     
-	
-	 public String getGender() {
-        
-		String gen ="";
-		
-		if(male.isSelected())
-		{
-			gen = "Male";
-		}
-		else if(female.isSelected())
-		{
-			gen = "female";
-		}
-		else if(other.isSelected())
-		{
-			gen = "Other";
-		}
-		
-		 return gen;
-	 }
-	
-	
-	 
+
+    @FXML
+    public void passwordKeyTypedAction(KeyEvent keyEvent)
+    {
+        if(keyEvent.getCode().toString().equals(password.getText()))
+        {
+            passwordDetection.setVisible(false);
+            passwordsDoNotMatch.setVisible(false);
+        }
+    }
+
+    public static UUID generateUUID() {
+        UUID uuid = UUID.randomUUID();
+        return uuid;
+    }
 }
 
 	

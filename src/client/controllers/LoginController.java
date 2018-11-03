@@ -7,10 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-import client.application.ClientMain;
-import client.network.ClientNetworkMain;
 import com.jfoenix.controls.*;
-import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import client.dBConnection.DBHandler;
-import packets.requests.LoginRequest;
 
 public class LoginController implements Initializable {
 
@@ -43,7 +38,7 @@ public class LoginController implements Initializable {
 	private JFXCheckBox remember;
 
     @FXML
-    private Label connectionErrorString;
+    private Label noUserFound;
 
     @FXML
 	private JFXButton forgotpassword;
@@ -69,7 +64,6 @@ public class LoginController implements Initializable {
 		return instance;
 	}
 
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		username.setStyle("-fx-text-inner-color: #a0a2ab;");
@@ -82,7 +76,7 @@ public class LoginController implements Initializable {
 	public void signInAction(ActionEvent e)
     {
         connection = handler.getConnection();
-        String q1 = "SELECT * from users where user_name=? and user_password=?";
+        String q1 = "SELECT * from users where username=? and password=?";
 
         try {
             pst = connection.prepareStatement(q1);
@@ -100,11 +94,10 @@ public class LoginController implements Initializable {
             if(count==1)
             {
                 signInButton.getScene().getWindow().hide();
+                noUserFound.setVisible(false);
 
                 Stage home = new Stage();
                 try {
-                    /*AnchorPane pane = FXMLLoader.load(getClass().getResource("/client/fxml/HOME.fxml"));
-                    anchorPane.getChildren().setAll(pane);*/
                     Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/HOME.fxml"));
 
                     Scene scene = new Scene(root);
@@ -118,10 +111,11 @@ public class LoginController implements Initializable {
             }
             else
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                noUserFound.setVisible(true);
+                /*Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setContentText("Username and Password Is Not Correct");
-                alert.show();
+                alert.show();*/
                 //progress.setVisible(false);
             }
 
@@ -148,7 +142,7 @@ public class LoginController implements Initializable {
         signInButton.getScene().getWindow().hide();
 		
 		Stage signup = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignUP.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
 		Scene scene = new Scene(root);
 		signup.setScene(scene);
 		signup.show();

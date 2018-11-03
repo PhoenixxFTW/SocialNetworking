@@ -68,8 +68,5 @@ public class HomeController implements Initializable {
 		  HomePageController.getInstance().createPage(CarsAnchor, "/client/fxml/TataMotors.fxml");
 		   
 	   }
-	
 
-	
-	
 }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
+<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1177.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.LoginController">
@@ -53,7 +58,7 @@
             <Tooltip text="Don't save your password on public computers!" />
          </tooltip>
       </JFXCheckBox>
-      <Label fx:id="connectionErrorString" layoutX="384.0" layoutY="123.0" text="Not connected to Management Server!" textFill="#e41414" visible="false">
+      <Label fx:id="noUserFound" layoutX="501.0" layoutY="152.0" text="User not found!" textFill="#e41414" visible="false">
          <font>
             <Font size="25.0" />
          </font>
