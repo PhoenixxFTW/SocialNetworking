@@ -7,12 +7,17 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -129,6 +134,18 @@ public class SignupController implements Initializable
                 pst.executeUpdate();
 
             } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            Stage home = new Stage();
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/HOME.fxml"));
+
+                Scene scene = new Scene(root);
+                home.setScene(scene);
+                home.show();
+
+            } catch (IOException e1) {
                 e1.printStackTrace();
             }
         } else {
