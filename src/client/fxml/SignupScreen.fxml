@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.shape.*?>
-<?import java.lang.*?>
+<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.*?>
-<?import javafx.scene.text.*?>
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1177.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controllers.SignupController">
    <children>
@@ -60,5 +61,10 @@
          </font>
       </JFXTextField>
       <Rectangle fx:id="passwordDetection" arcHeight="5.0" arcWidth="5.0" fill="#ff1f1f" height="5.0" layoutX="623.0" layoutY="364.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="385.0" />
+      <ImageView fitHeight="36.0" fitWidth="36.0" layoutX="35.0" layoutY="22.0" onMouseClicked="#backButtonClickAction">
+         <image>
+            <Image url="@Arrow_left.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

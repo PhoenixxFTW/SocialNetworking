@@ -7,15 +7,17 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import java.io.IOException;
-
 
 public class ClientMain extends Application
 {
 
+	public static Stage parentWindow;
+
     @Override
 	public void start(Stage primaryStage) {
 		try {
+			parentWindow = primaryStage;
+
 			Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/LoginScreen.fxml"));
 
 			Scene scene = new Scene(root,1187,664);

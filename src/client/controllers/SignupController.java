@@ -13,10 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,8 +30,11 @@ import java.util.UUID;
 public class SignupController implements Initializable
 {
 
+    //TODO Use kryonet for requests to db
+    //TODO setup password encryption
+
     @FXML
-    private AnchorPane parentPane;
+    private AnchorPane anchorPane;
 
     @FXML
     private JFXTextField full_name;
@@ -57,6 +62,9 @@ public class SignupController implements Initializable
 
     @FXML
     private JFXButton registerButton;
+
+    @FXML
+    private ImageView backButtonClickAction;
 
     private Connection connection;
     private DBHandler handler;
@@ -137,6 +145,7 @@ public class SignupController implements Initializable
                 e1.printStackTrace();
             }
 
+
             Stage home = new Stage();
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/HOME.fxml"));
@@ -167,6 +176,23 @@ public class SignupController implements Initializable
     public static UUID generateUUID() {
         UUID uuid = UUID.randomUUID();
         return uuid;
+    }
+
+    public void backButtonClickAction(MouseEvent mouseEvent)
+    {
+        loadUI("/client/fxml/LoginScreen.fxml");
+    }
+
+    private void loadUI(String ui)
+    {
+        Parent root = null;
+
+        try{
+            root = FXMLLoader.load(getClass().getResource(ui));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        anchorPane.getChildren().setAll(root);
     }
 }
 

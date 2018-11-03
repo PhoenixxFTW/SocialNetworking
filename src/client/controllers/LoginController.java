@@ -113,8 +113,6 @@ public class LoginController implements Initializable {
                 alert.show();*/
                 //progress.setVisible(false);
             }
-
-
         } catch (SQLException e1) {
 
             e1.printStackTrace();
@@ -132,16 +130,30 @@ public class LoginController implements Initializable {
 	}
 	
 	@FXML
-	public void signUpAction(ActionEvent e1) throws IOException
+	public void signUpAction(ActionEvent e1)
 	{
-        signInButton.getScene().getWindow().hide();
+        //signInButton.getScene().getWindow().hide();
+
+        loadUI("/client/fxml/SignupScreen.fxml");
+
+        /*try {
+            Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
+            Scene newScene = new Scene(root);
+
+            Stage mainStage;
+            mainStage = ClientMain.parentWindow;
+            mainStage.setScene(newScene);
+        } catch (Exception e){
+            e.printStackTrace();
+        }*/
+
 		
-		Stage signup = new Stage();
+		/*Stage signup = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
 		Scene scene = new Scene(root);
 		signup.setScene(scene);
 		signup.show();
-		signup.setResizable(false);
+		signup.setResizable(false);*/
 	}
 
 	@FXML
@@ -158,5 +170,17 @@ public class LoginController implements Initializable {
     public String getPassword()
     {
         return password.getText();
+    }
+
+    private void loadUI(String ui)
+    {
+        Parent root = null;
+
+        try{
+            root = FXMLLoader.load(getClass().getResource(ui));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        anchorPane.getChildren().setAll(root);
     }
 }
