@@ -116,59 +116,61 @@ public class SignupController implements Initializable
 	@FXML
 	public void registerAction(ActionEvent e)
 	{
-        String studentNumber = student_number.getText();
-        String usernameGiven = username.getText();
-        String fullName = full_name.getText();
-        String emailGiven = email.getText();
-        String passwordGiven = password.getText();
-
-        boolean isMissingEntry = fullName.isEmpty() || studentNumber.isEmpty() || usernameGiven.isEmpty() || emailGiven.isEmpty() || passwordGiven.isEmpty() || verified_password.getText().isEmpty();
-
-        if(passwordGiven.equals(verified_password.getText()))
-        {
-            passwordsDoNotMatch.setVisible(false);
-            passwordDetection.setVisible(false);
-        } else {
-            System.out.println("passwords do not match! Main pass: " + passwordGiven + " other pass: " + verified_password.getText());
-            passwordsDoNotMatch.setVisible(true);
-            passwordDetection.setVisible(true);
-        }
-
-        if(isMissingEntry)
-        {
-            System.out.println("==================================");
-            System.out.println("full_name = " + fullName + " | isEmpty: " + fullName.isEmpty());
-            System.out.println("student_number = " + studentNumber + " | isEmpty: " + studentNumber.isEmpty());
-            System.out.println("email = " + emailGiven + " | isEmpty: " + emailGiven.isEmpty());
-            System.out.println("password = " + passwordGiven + " | isEmpty: " + passwordGiven.isEmpty());
-            System.out.println("verified_password = " + verified_password.getText() + " | isEmpty: " + verified_password.getText().isEmpty());
-            System.out.println("Missing an entry!");
-
-            missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
-            missingEntry.setText("You are missing an entry!");
-            missingEntry.setVisible(true);
-            return;
-        } else {
-            missingEntry.setVisible(false);
-        }
-
-	    if(!fullName.isEmpty() && !studentNumber.isEmpty() && !usernameGiven.isEmpty() && !emailGiven.isEmpty() && !passwordGiven.isEmpty() && !verified_password.getText().isEmpty() && (passwordGiven.equals(verified_password.getText())))
+	    if(ClientMain.getNetworkManager().client.isConnected())
 	    {
-            String uuid = generateUUID().toString();
+            String studentNumber = student_number.getText();
+            String usernameGiven = username.getText();
+            String fullName = full_name.getText();
+            String emailGiven = email.getText();
+            String passwordGiven = password.getText();
 
-	        SignUpRequest request = new SignUpRequest();
-            SignUpObject signUpObject = new SignUpObject();
+            boolean isMissingEntry = fullName.isEmpty() || studentNumber.isEmpty() || usernameGiven.isEmpty() || emailGiven.isEmpty() || passwordGiven.isEmpty() || verified_password.getText().isEmpty();
 
-            signUpObject.setUuid(uuid);
-            signUpObject.setStudentNumber(studentNumber);
-            signUpObject.setFullName(fullName);
-            signUpObject.setEmail(emailGiven);
-            signUpObject.setUsername(usernameGiven);
-            signUpObject.setPassword(passwordGiven);
+            if(passwordGiven.equals(verified_password.getText()))
+            {
+                passwordsDoNotMatch.setVisible(false);
+                passwordDetection.setVisible(false);
+            } else {
+                System.out.println("passwords do not match! Main pass: " + passwordGiven + " other pass: " + verified_password.getText());
+                passwordsDoNotMatch.setVisible(true);
+                passwordDetection.setVisible(true);
+            }
 
-            request.setSignUpObject(signUpObject);
+            if(isMissingEntry)
+            {
+                System.out.println("==================================");
+                System.out.println("full_name = " + fullName + " | isEmpty: " + fullName.isEmpty());
+                System.out.println("student_number = " + studentNumber + " | isEmpty: " + studentNumber.isEmpty());
+                System.out.println("email = " + emailGiven + " | isEmpty: " + emailGiven.isEmpty());
+                System.out.println("password = " + passwordGiven + " | isEmpty: " + passwordGiven.isEmpty());
+                System.out.println("verified_password = " + verified_password.getText() + " | isEmpty: " + verified_password.getText().isEmpty());
+                System.out.println("Missing an entry!");
 
-            ClientMain.getNetworkManager().sendMessageToServer(request);
+                missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
+                missingEntry.setText("You are missing an entry!");
+                missingEntry.setVisible(true);
+                return;
+            } else {
+                missingEntry.setVisible(false);
+            }
+
+            if(!fullName.isEmpty() && !studentNumber.isEmpty() && !usernameGiven.isEmpty() && !emailGiven.isEmpty() && !passwordGiven.isEmpty() && !verified_password.getText().isEmpty() && (passwordGiven.equals(verified_password.getText())))
+            {
+                String uuid = generateUUID().toString();
+
+                SignUpRequest request = new SignUpRequest();
+                SignUpObject signUpObject = new SignUpObject();
+
+                signUpObject.setUuid(uuid);
+                signUpObject.setStudentNumber(studentNumber);
+                signUpObject.setFullName(fullName);
+                signUpObject.setEmail(emailGiven);
+                signUpObject.setUsername(usernameGiven);
+                signUpObject.setPassword(passwordGiven);
+
+                request.setSignUpObject(signUpObject);
+
+                ClientMain.getNetworkManager().sendMessageToServer(request);
 
             /*PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> {
@@ -219,14 +221,19 @@ public class SignupController implements Initializable
                 e1.printStackTrace();
             }*/
 
-        } else {
-            System.out.println("DATA IS EMPTY");
+            } else {
+                System.out.println("DATA IS EMPTY");
 
+                missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
+                missingEntry.setText("You are missing an entry!");
+                missingEntry.setVisible(true);
+            }
+        } else {
             missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
-            missingEntry.setText("You are missing an entry!");
+            missingEntry.setText("Error processing request! Please try again later.");
+            missingEntry.setTranslateX(-60);
             missingEntry.setVisible(true);
         }
-
 	}
 
     @FXML

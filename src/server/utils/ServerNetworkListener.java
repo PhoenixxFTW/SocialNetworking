@@ -14,8 +14,6 @@ public class ServerNetworkListener extends Listener
     {
         int connectionID = connection.getID();
 
-        System.out.println("New object received!!! " + object);
-
         if(object instanceof SignUpRequest)
         {
             SignUpRequest request = (SignUpRequest)object;

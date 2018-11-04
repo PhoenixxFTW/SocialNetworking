@@ -7,7 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+import client.application.ClientMain;
 import com.jfoenix.controls.*;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +18,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import client.dBConnection.DBHandler;
+import javafx.util.Duration;
 
 public class LoginController implements Initializable {
 
@@ -45,6 +51,18 @@ public class LoginController implements Initializable {
 	@FXML
 	private JFXPasswordField password;
 
+    @FXML
+    private Rectangle notification;
+
+    @FXML
+    private Label notificationTitle;
+
+    @FXML
+    private Label notificationText;
+
+    @FXML
+    private ImageView notificationSymbol;
+
 	private DBHandler handler;
 	private Connection connection;
 	private java.sql.PreparedStatement pst;
@@ -71,7 +89,11 @@ public class LoginController implements Initializable {
 	@FXML
 	public void signInAction(ActionEvent e)
     {
-        connection = handler.getConnection();
+        if(!ClientMain.getNetworkManager().client.isConnected())
+        {
+            showNotification();
+        }
+        /*connection = handler.getConnection();
         String q1 = "SELECT * from users where username=? and password=?";
 
         try {
@@ -107,10 +129,10 @@ public class LoginController implements Initializable {
             else
             {
                 noUserFound.setVisible(true);
-                /*Alert alert = new Alert(Alert.AlertType.ERROR);
+                *//*Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
                 alert.setContentText("Username and Password Is Not Correct");
-                alert.show();*/
+                alert.show();*//*
                 //progress.setVisible(false);
             }
         } catch (SQLException e1) {
@@ -126,7 +148,7 @@ public class LoginController implements Initializable {
 
                 e1.printStackTrace();
             }
-        }
+        }*/
 	}
 	
 	@FXML
@@ -134,7 +156,12 @@ public class LoginController implements Initializable {
 	{
         //signInButton.getScene().getWindow().hide();
 
-        loadUI("/client/fxml/SignupScreen.fxml");
+        if(!ClientMain.getNetworkManager().client.isConnected())
+        {
+            showNotification();
+        } else {
+            loadUI("/client/fxml/SignupScreen.fxml");
+        }
 
         /*LoginRequest request = new LoginRequest();
         request.setUsername("testUserName");
@@ -164,8 +191,11 @@ public class LoginController implements Initializable {
 	@FXML
 	public void forgotPassAction(ActionEvent e1) throws IOException
 	{
-
-	}
+        if(!ClientMain.getNetworkManager().client.isConnected())
+        {
+            showNotification();
+        }
+    }
 
     public String getUsername()
     {
@@ -187,5 +217,57 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
         anchorPane.getChildren().setAll(root);
+    }
+
+    public void showNotification(/*String title, String message*/)
+    {
+        notification.setVisible(true);
+        notificationTitle.setVisible(true);
+        notificationText.setVisible(true);
+        notificationSymbol.setVisible(true);
+
+        TranslateTransition notificationBox=new TranslateTransition(new Duration(350), notification);
+        notificationBox.setToY(-(notification.getHeight()));
+        TranslateTransition closeNav=new TranslateTransition(new Duration(350), notification);
+
+        if(notification.getTranslateY()!=0){
+            notificationBox.play();
+        }else{
+            closeNav.setToY(0);
+            closeNav.play();
+        }
+
+        TranslateTransition notificationTitleAnimation=new TranslateTransition(new Duration(350), notificationTitle);
+        notificationTitleAnimation.setToY(-(notificationTitle.getHeight()));
+        TranslateTransition closeNotificationTitle=new TranslateTransition(new Duration(350), notificationTitle);
+
+        if(notificationTitle.getTranslateY()!=0){
+            notificationTitleAnimation.play();
+        }else{
+            closeNotificationTitle.setToY(0);
+            closeNotificationTitle.play();
+        }
+
+        TranslateTransition notificationTextAnimation=new TranslateTransition(new Duration(350), notificationText);
+        notificationTextAnimation.setToY(-(notification.getHeight()));
+        TranslateTransition closeNotificationText=new TranslateTransition(new Duration(350), notificationText);
+
+        if(notificationText.getTranslateY()!=0){
+            notificationTextAnimation.play();
+        }else{
+            closeNotificationText.setToY(0);
+            closeNotificationText.play();
+        }
+
+        TranslateTransition notificationSymbolAnimation=new TranslateTransition(new Duration(350), notificationSymbol);
+        notificationTextAnimation.setToY(-(notification.getHeight()));
+        TranslateTransition closeNotificationSymbol=new TranslateTransition(new Duration(350), notificationSymbol);
+
+        if(notificationSymbol.getTranslateY()!=0){
+            notificationSymbolAnimation.play();
+        }else{
+            closeNotificationSymbol.setToY(0);
+            closeNotificationSymbol.play();
+        }
     }
 }

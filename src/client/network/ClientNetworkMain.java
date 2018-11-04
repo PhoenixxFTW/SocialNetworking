@@ -1,6 +1,7 @@
 package client.network;
 
 import client.application.ClientMain;
+import client.controllers.LoginController;
 import packets.PacketRegistry;
 import client.utils.ClientNetworkListener;
 import com.esotericsoftware.kryo.Kryo;
@@ -15,6 +16,8 @@ public class ClientNetworkMain
 
     public static boolean shouldConnect = true;
     public static boolean hasConnectedBefore = false;
+    public static boolean hasShownDisconnectNotification = false;
+    public static boolean hasShowConnectNotification = false;
 
     public static final String NETWORK_IP = "127.0.0.1";
     public static final int NETWORK_TCP_PORT = 2273;
@@ -68,6 +71,11 @@ public class ClientNetworkMain
 
     public static void attemptReconnect()
     {
+        if(!hasShowConnectNotification)
+        {
+            //LoginController.getInstance().showNotification();
+        }
+
         if(shouldConnect && hasConnectedBefore)
         {
             new Thread(() -> {
@@ -122,6 +130,7 @@ public class ClientNetworkMain
 
     public void shutdown()
     {
+        shouldConnect = false;
         client.close();
         client.stop();
     }

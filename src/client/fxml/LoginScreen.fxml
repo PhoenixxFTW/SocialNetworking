@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.shape.*?>
@@ -63,5 +64,24 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <Rectangle fx:id="notification" arcHeight="5.0" arcWidth="5.0" fill="#39424a" height="93.0" stroke="#edfa05" strokeType="INSIDE" visible="false" width="385.0">
+         <effect>
+            <Glow />
+         </effect>
+      </Rectangle>
+      <Label fx:id="notificationTitle" layoutX="6.0" layoutY="6.0" prefHeight="35.0" prefWidth="342.0" text="Error connecting to management server!" textFill="#ff2929" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <effect>
+            <Glow />
+         </effect>
+      </Label>
+      <Label fx:id="notificationText" layoutX="6.0" layoutY="41.0" prefHeight="35.0" prefWidth="342.0" text="Please try again later. If you continue to get this error, our management server may be experiencing down time" textFill="#1bd0b8" visible="false" wrapText="true" />
+      <ImageView fx:id="notificationSymbol" fitHeight="57.0" fitWidth="57.0" layoutX="319.0" layoutY="30.0" visible="false">
+         <image>
+            <Image url="@Warning_Icon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
