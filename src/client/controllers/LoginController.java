@@ -136,6 +136,11 @@ public class LoginController implements Initializable {
 
         loadUI("/client/fxml/SignupScreen.fxml");
 
+        /*LoginRequest request = new LoginRequest();
+        request.setUsername("testUserName");
+        request.setPassword("testPassWord");
+        ClientMain.getNetworkManager().sendMessageToServer(request);*/
+
         /*try {
             Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
             Scene newScene = new Scene(root);

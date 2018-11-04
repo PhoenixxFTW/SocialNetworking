@@ -1,12 +1,12 @@
 package client.network;
 
+import client.application.ClientMain;
 import packets.PacketRegistry;
 import client.utils.ClientNetworkListener;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class ClientNetworkMain
 {
@@ -20,6 +20,23 @@ public class ClientNetworkMain
     public static final int NETWORK_TCP_PORT = 2273;
     public static final int NETWORK_UDP_PORT = 4625;
 
+    private ClientNetworkMain()
+    {
+        if(shouldConnect)
+        {
+            try {
+                initializeClientConnection(NETWORK_IP, NETWORK_TCP_PORT, NETWORK_UDP_PORT);
+            } catch (IOException e) {
+                e.printStackTrace();
+                attemptReconnect();
+            }
+        }
+    }
+
+    public static ClientNetworkMain connect()
+    {
+        return new ClientNetworkMain();
+    }
 
     public static void initializeClientConnection(String host, int tcpPort, int udpPort) throws IOException
     {
@@ -36,7 +53,6 @@ public class ClientNetworkMain
 
         client.addListener(new PacketRegistry());
         client.addListener(new ClientNetworkListener());
-
         /*while(true)
         {
             Scanner reader = new Scanner(System.in);
@@ -96,7 +112,21 @@ public class ClientNetworkMain
         }
     }
 
-    public static void main(String args[])
+    public void sendMessageToServer(String messageGiven){
+        client.sendTCP(messageGiven);
+    }
+
+    public void sendMessageToServer(Object objectGiven){
+        client.sendTCP(objectGiven);
+    }
+
+    public void shutdown()
+    {
+        client.close();
+        client.stop();
+    }
+
+    /*public static void main(String args[])
     {
         if(shouldConnect)
         {
@@ -108,5 +138,5 @@ public class ClientNetworkMain
                 attemptReconnect();
             }
         }
-    }
+    }*/
 }

@@ -7,11 +7,11 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-
 public class ClientMain extends Application
 {
-
 	public static Stage parentWindow;
+
+	private static ClientNetworkMain networkManager;
 
     @Override
 	public void start(Stage primaryStage) {
@@ -26,14 +26,18 @@ public class ClientMain extends Application
 			primaryStage.setTitle("Phoenix Studios");
 			primaryStage.setResizable(false);
 
+			primaryStage.setOnCloseRequest(event -> {
+                getNetworkManager().shutdown();
+            });
+
 
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+
         /*if(ClientNetworkMain.shouldConnect)
         {
             try {
@@ -45,6 +49,17 @@ public class ClientMain extends Application
             }
         }*/
 
+        newNetworkManager();
         launch(args);
+    }
+
+	public static void newNetworkManager()
+	{
+		networkManager = ClientNetworkMain.connect();
+	}
+
+	public static ClientNetworkMain getNetworkManager()
+	{
+		return networkManager;
 	}
 }

@@ -1,30 +1,33 @@
 package client.controllers;
 
 
+import client.application.ClientMain;
 import client.dBConnection.DBHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
+import packets.objects.SignUpObject;
+import packets.requests.SignUpRequest;
 
-import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
+
 import java.util.UUID;
 
 public class SignupController implements Initializable
@@ -58,21 +61,38 @@ public class SignupController implements Initializable
     private Label passwordsDoNotMatch;
 
     @FXML
+    private Label missingEntry;
+
+    @FXML
     private Rectangle passwordDetection;
 
     @FXML
     private JFXButton registerButton;
 
-    @FXML
-    private ImageView backButtonClickAction;
-
     private Connection connection;
     private DBHandler handler;
     private PreparedStatement pst;
 
+    private static SignupController instance;
+
+    public static SignupController getInstance() {
+        return instance;
+    }
+
+    public void setRegistered()
+    {
+        Platform.runLater(()->{
+            System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
+            missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
+            missingEntry.setText("Registered Successfully!");
+            missingEntry.setVisible(true);
+        });
+    }
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1)
     {
+        instance = this;
         full_name.setStyle("-fx-text-inner-color: #a0a2ab;");
         student_number.setStyle("-fx-text-inner-color: #a0a2ab;");
         email.setStyle("-fx-text-inner-color: #a0a2ab;");
@@ -96,19 +116,74 @@ public class SignupController implements Initializable
 	@FXML
 	public void registerAction(ActionEvent e)
 	{
-        if(password.getText().equals(verified_password.getText()))
+        String studentNumber = student_number.getText();
+        String usernameGiven = username.getText();
+        String fullName = full_name.getText();
+        String emailGiven = email.getText();
+        String passwordGiven = password.getText();
+
+        boolean isMissingEntry = fullName.isEmpty() || studentNumber.isEmpty() || usernameGiven.isEmpty() || emailGiven.isEmpty() || passwordGiven.isEmpty() || verified_password.getText().isEmpty();
+
+        if(passwordGiven.equals(verified_password.getText()))
         {
             passwordsDoNotMatch.setVisible(false);
             passwordDetection.setVisible(false);
         } else {
-            System.out.println("passwords do not match! Main pass: " + password.getText() + " other pass: " + verified_password.getText());
+            System.out.println("passwords do not match! Main pass: " + passwordGiven + " other pass: " + verified_password.getText());
             passwordsDoNotMatch.setVisible(true);
             passwordDetection.setVisible(true);
         }
 
-	    if(!full_name.getText().isEmpty() && !student_number.getText().isEmpty() && !email.getText().isEmpty()/* && !password.getText().isEmpty() && !verified_password.getText().isEmpty()*/)
+        if(isMissingEntry)
+        {
+            System.out.println("==================================");
+            System.out.println("full_name = " + fullName + " | isEmpty: " + fullName.isEmpty());
+            System.out.println("student_number = " + studentNumber + " | isEmpty: " + studentNumber.isEmpty());
+            System.out.println("email = " + emailGiven + " | isEmpty: " + emailGiven.isEmpty());
+            System.out.println("password = " + passwordGiven + " | isEmpty: " + passwordGiven.isEmpty());
+            System.out.println("verified_password = " + verified_password.getText() + " | isEmpty: " + verified_password.getText().isEmpty());
+            System.out.println("Missing an entry!");
+
+            missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
+            missingEntry.setText("You are missing an entry!");
+            missingEntry.setVisible(true);
+            return;
+        } else {
+            missingEntry.setVisible(false);
+        }
+
+	    if(!fullName.isEmpty() && !studentNumber.isEmpty() && !usernameGiven.isEmpty() && !emailGiven.isEmpty() && !passwordGiven.isEmpty() && !verified_password.getText().isEmpty() && (passwordGiven.equals(verified_password.getText())))
 	    {
-            String insert = "INSERT INTO users(uuid,student_number,username,full_name,email,password) VALUES (?,?,?,?,?,?)";
+            String uuid = generateUUID().toString();
+
+	        SignUpRequest request = new SignUpRequest();
+            SignUpObject signUpObject = new SignUpObject();
+
+            signUpObject.setUuid(uuid);
+            signUpObject.setStudentNumber(studentNumber);
+            signUpObject.setFullName(fullName);
+            signUpObject.setEmail(emailGiven);
+            signUpObject.setUsername(usernameGiven);
+            signUpObject.setPassword(passwordGiven);
+
+            request.setSignUpObject(signUpObject);
+
+            ClientMain.getNetworkManager().sendMessageToServer(request);
+
+            /*PauseTransition pause = new PauseTransition(Duration.seconds(3));
+            pause.setOnFinished(event -> {
+                if(isRegistered)
+                {
+                    System.out.println("REGISTERED SUCCESSFULLY!!!");
+                    missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
+                    missingEntry.setText("Registered Successfully!");
+                    missingEntry.setVisible(true);
+                }
+            });
+            pause.play();*/
+
+
+            /*String insert = "INSERT INTO users(uuid,student_number,username,full_name,email,password) VALUES (?,?,?,?,?,?)";
 
             connection = handler.getConnection();
             try {
@@ -119,11 +194,11 @@ public class SignupController implements Initializable
 
             try {
                 String uuid = generateUUID().toString();
-                String studentNumber = student_number.getText();
-                String usernameGiven = username.getText();
-                String fullName = full_name.getText();
-                String emailGiven = email.getText();
-                String passwordGiven = password.getText();
+                String studentNumber = studentNumber;
+                String usernameGiven = usernameGiven;
+                String fullName = fullName;
+                String emailGiven = emailGiven;
+                String passwordGiven = passwordGiven;
 
                 pst.setString(1, uuid);
                 pst.setString(2, studentNumber);
@@ -140,25 +215,16 @@ public class SignupController implements Initializable
                 System.out.println("password: " + passwordGiven);
 
                 pst.executeUpdate();
-
             } catch (SQLException e1) {
                 e1.printStackTrace();
-            }
+            }*/
 
-
-            Stage home = new Stage();
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/HOME.fxml"));
-
-                Scene scene = new Scene(root);
-                home.setScene(scene);
-                home.show();
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         } else {
             System.out.println("DATA IS EMPTY");
+
+            missingEntry.setTextFill(Paint.valueOf(new Color(1, 0.2, 0.2, 1).toString()));
+            missingEntry.setText("You are missing an entry!");
+            missingEntry.setVisible(true);
         }
 
 	}

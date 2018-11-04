@@ -25,6 +25,11 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Label fx:id="missingEntry" layoutX="521.0" layoutY="423.0" text="You are missing an entry!" textFill="#f53e3e" visible="false">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
       <JFXButton fx:id="registerButton" layoutX="500.0" layoutY="453.0" onAction="#registerAction" prefHeight="51.0" prefWidth="198.0" style="-fx-background-color: #3C58FA;" text="Register" textFill="#a0a2ab">
          <font>
             <Font size="20.0" />
