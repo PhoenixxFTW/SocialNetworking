@@ -154,47 +154,18 @@ public class LoginController implements Initializable {
 	@FXML
 	public void signUpAction(ActionEvent e1)
 	{
-        //signInButton.getScene().getWindow().hide();
-
         if(!ClientMain.getNetworkManager().client.isConnected())
         {
             showNotification();
         } else {
             loadUI("/client/fxml/SignupScreen.fxml");
         }
-
-        /*LoginRequest request = new LoginRequest();
-        request.setUsername("testUserName");
-        request.setPassword("testPassWord");
-        ClientMain.getNetworkManager().sendMessageToServer(request);*/
-
-        /*try {
-            Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
-            Scene newScene = new Scene(root);
-
-            Stage mainStage;
-            mainStage = ClientMain.parentWindow;
-            mainStage.setScene(newScene);
-        } catch (Exception e){
-            e.printStackTrace();
-        }*/
-
-		
-		/*Stage signup = new Stage();
-		Parent root = FXMLLoader.load(getClass().getResource("/client/fxml/SignupScreen.fxml"));
-		Scene scene = new Scene(root);
-		signup.setScene(scene);
-		signup.show();
-		signup.setResizable(false);*/
 	}
 
 	@FXML
 	public void forgotPassAction(ActionEvent e1) throws IOException
 	{
-        if(!ClientMain.getNetworkManager().client.isConnected())
-        {
-            showNotification();
-        }
+
     }
 
     public String getUsername()

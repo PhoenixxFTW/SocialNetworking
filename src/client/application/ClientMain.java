@@ -1,6 +1,5 @@
 package client.application;
 
-import client.controllers.LoginController;
 import client.network.ClientNetworkMain;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

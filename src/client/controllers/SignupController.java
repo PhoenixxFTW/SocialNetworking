@@ -79,14 +79,25 @@ public class SignupController implements Initializable
         return instance;
     }
 
-    public void setRegistered()
+    public void setRegistered(boolean isRegistered)
     {
-        Platform.runLater(()->{
-            System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
-            missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
-            missingEntry.setText("Registered Successfully!");
-            missingEntry.setVisible(true);
-        });
+        if(isRegistered)
+        {
+            Platform.runLater(()->{
+                //System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
+                missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
+                missingEntry.setText("Registered Successfully!");
+                missingEntry.setVisible(true);
+            });
+        } else {
+            Platform.runLater(()->{
+                //System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
+                missingEntry.setTextFill(Paint.valueOf(Color.RED.toString()));
+                missingEntry.setText("User already exists!");
+                missingEntry.setVisible(true);
+            });
+        }
+
     }
 
 	@Override
@@ -153,6 +164,8 @@ public class SignupController implements Initializable
             } else {
                 missingEntry.setVisible(false);
             }
+
+
 
             if(!fullName.isEmpty() && !studentNumber.isEmpty() && !usernameGiven.isEmpty() && !emailGiven.isEmpty() && !passwordGiven.isEmpty() && !verified_password.getText().isEmpty() && (passwordGiven.equals(verified_password.getText())))
             {

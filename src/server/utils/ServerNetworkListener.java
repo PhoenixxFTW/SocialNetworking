@@ -7,6 +7,11 @@ import packets.requests.LoginRequest;
 import packets.requests.SignUpRequest;
 import packets.responses.SignUpResponse;
 import server.ServerNetworkMain;
+import server.managers.database.Database;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ServerNetworkListener extends Listener
 {
@@ -28,6 +33,15 @@ public class ServerNetworkListener extends Listener
                 String emailGiven = signUpObject.getEmail();
                 String passwordGiven = signUpObject.getPassword();
 
+                Database database = ServerNetworkMain.getDatabase();
+
+                boolean doesUserExist = false;
+                try {
+                    doesUserExist = ServerNetworkMain.getDatabaseManager().doesUserExist(usernameGiven, passwordGiven, studentNumber);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
                 System.out.println("RECEIVED REGISTER PACKET!");
 
                 System.out.println("==================================");
@@ -38,12 +52,19 @@ public class ServerNetworkListener extends Listener
                 System.out.println("email = " + emailGiven);
                 System.out.println("password = " + passwordGiven);
 
-                SignUpResponse response = new SignUpResponse();
+                if(!doesUserExist)
+                {
+                    ServerNetworkMain.getDatabaseManager().createNewUserinDB(uuid, studentNumber, usernameGiven, emailGiven,passwordGiven);
 
-                response.setRegisterSuccessFull(true);
-                response.setMessage("YEEEEEEET  YOU HAVE SUCCESSFULLY REGISTERED @@@@@@@@@@@@");
+                    SignUpResponse response = new SignUpResponse();
 
-                ServerNetworkMain.server.sendToTCP(connectionID, response);
+                    response.setRegisterSuccessFull(doesUserExist);
+                    response.setMessage(doesUserExist ? "User already exists!" : "Successfully registered!");
+
+                    ServerNetworkMain.server.sendToTCP(connectionID, response);
+                }
+
+
             } else {
                 System.out.println("SIGN UP OBJECT WAS NULL WHAT THE FUCK");
             }
@@ -69,5 +90,4 @@ public class ServerNetworkListener extends Listener
     {
         System.out.println("Connection with ID " + connection.getID() + " disconnected!");
     }
-
 }

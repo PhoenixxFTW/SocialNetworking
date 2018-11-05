@@ -16,7 +16,7 @@ public class ClientNetworkListener extends Listener {
             SignUpResponse response = (SignUpResponse)object;
             System.out.println(response.getMessage());
 
-            SignupController.getInstance().setRegistered();
+            SignupController.getInstance().setRegistered(response.isRegisterSuccessFull());
         }
     }
 

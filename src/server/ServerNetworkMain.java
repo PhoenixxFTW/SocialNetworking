@@ -31,6 +31,7 @@ public class ServerNetworkMain
     private static ServerNetworkMain instance;
 
     private static Database mySqlDatabase;
+    private static DatabaseManager databaseManager;
     private static DatabaseThread databaseQueue;
 
     public static void main(String args[])
@@ -42,7 +43,9 @@ public class ServerNetworkMain
         }
 
         mySqlDatabase = new Database(DB_HOST, Integer.parseInt(DB_PORT), DB_USER, DB_NAME, DB_PASS);
-        mySqlDatabase.createDefaultTables();
+
+        databaseManager = new DatabaseManager(mySqlDatabase);
+        databaseManager.createDefaultTables();
 
 		databaseQueue = new DatabaseThread();
 		databaseQueue.start();
@@ -74,5 +77,9 @@ public class ServerNetworkMain
 
     public static Database getDatabase() {
         return mySqlDatabase;
+    }
+
+    public static DatabaseManager getDatabaseManager() {
+        return databaseManager;
     }
 }

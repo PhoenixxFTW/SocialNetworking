@@ -95,6 +95,24 @@ public class Database {
         return statement;
     }
 
+    public void sendPreparedStatement(PreparedStatement preparedStatement, boolean isUpdate) {
+        try {
+
+            if (connection == null || connection.isClosed()) {
+                connect();
+            }
+
+            if (isUpdate) {
+                preparedStatement.executeUpdate();
+            } else {
+                preparedStatement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not run query! Reason: '" + e.getMessage() + "'");
+        }
+    }
+
     public Queue<NetworkPreparedStatement> getQueuedStatements() {
         return queuedStatements;
     }
@@ -109,6 +127,7 @@ public class Database {
 
     public void createDefaultTables()
     {
+        //TODO Add dateJoined
         String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, PRIMARY KEY (uuid));";
         String CREATE_USERPROFILE_TABLE = "CREATE TABLE IF NOT EXISTS UserProfile (uuid varchar(45) NOT NULL, status TEXT, mood TEXT, clanTag varchar(4), profileShowcase JSON, PRIMARY KEY (uuid));";
         String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
@@ -116,6 +135,11 @@ public class Database {
         sendPreparedStatement(CREATE_USERS_TABLE, false);
         //database.sendPreparedStatement(CREATE_USERPROFILE_TABLE, false);
         //database.sendPreparedStatement(CREATE_USERFRIENDS_TABLE, false);
+    }
+
+    public Connection getConnection()
+    {
+        return connection;
     }
 
     protected class NetworkPreparedStatement {
