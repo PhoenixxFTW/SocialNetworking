@@ -4,6 +4,7 @@ import client.controllers.SignupController;
 import client.network.ClientNetworkMain;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import packets.responses.SignInResponse;
 import packets.responses.SignUpResponse;
 
 public class ClientNetworkListener extends Listener {
@@ -16,7 +17,17 @@ public class ClientNetworkListener extends Listener {
             SignUpResponse response = (SignUpResponse)object;
             System.out.println(response.getMessage());
 
+            System.out.println("SIGN UP RESPONSE RECEIVED isRegistered = " + response.isRegisterSuccessFull());
+
             SignupController.getInstance().setRegistered(response.isRegisterSuccessFull());
+        }
+
+        if(object instanceof SignInResponse)
+        {
+            SignInResponse response = (SignInResponse)object;
+
+            System.out.println("SIGN IN RESPONSE RECEIVED canLogin = " + response.canLogin());
+            System.out.println("message = " + response.getMessage());
         }
     }
 

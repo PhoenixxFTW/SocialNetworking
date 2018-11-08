@@ -2,10 +2,8 @@ package server.managers.database;
 
 import server.ServerNetworkMain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -16,6 +14,8 @@ public class Database {
     private Queue<NetworkPreparedStatement> queuedStatements = new LinkedList<>();
 
     private String host, database, username, password;
+
+    private ArrayList<String> test = new ArrayList<>();
     private int port;
 
     public Database() {}
@@ -40,7 +40,6 @@ public class Database {
     }
 
     public void connect() {
-
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username, password);
             System.out.println("Connected to the database!");

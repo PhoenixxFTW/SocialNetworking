@@ -3,15 +3,11 @@ package server.utils;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import packets.objects.SignUpObject;
-import packets.requests.LoginRequest;
+import packets.requests.SignInRequest;
 import packets.requests.SignUpRequest;
+import packets.responses.SignInResponse;
 import packets.responses.SignUpResponse;
 import server.ServerNetworkMain;
-import server.managers.database.Database;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class ServerNetworkListener extends Listener
 {
@@ -33,14 +29,7 @@ public class ServerNetworkListener extends Listener
                 String emailGiven = signUpObject.getEmail();
                 String passwordGiven = signUpObject.getPassword();
 
-                Database database = ServerNetworkMain.getDatabase();
-
-                boolean doesUserExist = false;
-                try {
-                    doesUserExist = ServerNetworkMain.getDatabaseManager().doesUserExist(usernameGiven, passwordGiven, studentNumber);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                boolean doesUserExist = ServerNetworkMain.getDatabaseManager().doesUserExist(usernameGiven, passwordGiven, studentNumber);
 
                 System.out.println("RECEIVED REGISTER PACKET!");
 
@@ -51,28 +40,37 @@ public class ServerNetworkListener extends Listener
                 System.out.println("full_name = " + fullName);
                 System.out.println("email = " + emailGiven);
                 System.out.println("password = " + passwordGiven);
+                System.out.println("DOES USER EXIST = " + doesUserExist);
 
-                if(!doesUserExist)
-                {
-                    ServerNetworkMain.getDatabaseManager().createNewUserinDB(uuid, studentNumber, usernameGiven, emailGiven,passwordGiven);
+                ServerNetworkMain.getDatabaseManager().createNewUserinDB(uuid, studentNumber, usernameGiven, emailGiven,passwordGiven, fullName);
 
-                    SignUpResponse response = new SignUpResponse();
+                SignUpResponse response = new SignUpResponse();
 
-                    response.setRegisterSuccessFull(doesUserExist);
-                    response.setMessage(doesUserExist ? "User already exists!" : "Successfully registered!");
+                response.setRegisterSuccessFull(doesUserExist);
+                response.setMessage(doesUserExist ? "User already exists!" : "Successfully registered!");
 
-                    ServerNetworkMain.server.sendToTCP(connectionID, response);
-                }
-
+                ServerNetworkMain.server.sendToTCP(connectionID, response);
 
             } else {
                 System.out.println("SIGN UP OBJECT WAS NULL WHAT THE FUCK");
             }
         }
 
-        if(object instanceof LoginRequest)
+        if(object instanceof SignInRequest)
         {
-            LoginRequest request = (LoginRequest)object;
+            SignInRequest request = (SignInRequest)object;
+
+            String usernameGiven = request.getUsername();
+            String passwordGiven = request.getPassword();
+
+            boolean doesUserExist = ServerNetworkMain.getDatabaseManager().doesUserExist(usernameGiven, passwordGiven, "null");
+
+            SignInResponse response = new SignInResponse();
+
+            response.setCanLogin(doesUserExist);
+            response.setMessage(doesUserExist ? "Successfully registered!" : "Unable to find user!" );
+
+            ServerNetworkMain.server.sendToTCP(connectionID, response);
 
             System.out.println("Login request received from: " + request.getUsername());
             System.out.println("Password is :" + request.getPassword());

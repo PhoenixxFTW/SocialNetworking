@@ -28,41 +28,65 @@ public class DatabaseManager
         //database.sendPreparedStatement(CREATE_USERFRIENDS_TABLE, false);
     }
 
-    public boolean doesUserExist(String username, String password, String studentNumber) throws SQLException
+    public boolean doesUserExist(String username, String password, String studentNumber)
     {
         java.sql.Connection connection = database.getConnection();
+        ResultSet results;
+        PreparedStatement preparedStatement;
 
-        if(!connection.isClosed() && connection !=null)
-        {
-            String selectSQL = "SELECT * FROM userdata WHERE username = ? and password = ? and student_numer = ?";
-            PreparedStatement preparedStatement = connection.prepareStatement(selectSQL);
-            ResultSet rs = preparedStatement.executeQuery(selectSQL);
-
-            preparedStatement.setString(1, username);
-            preparedStatement.setString(2, password);
-            preparedStatement.setString(3, studentNumber);
-
-            int count=0;
-
-            while(rs.next())
+        try {
+            if(!connection.isClosed() && connection !=null)
             {
-                count=count+1;
-            }
+                String selectSQL = "SELECT * from userdata where username = ? and password = ?";
 
-            if(count >=1)
-            {
-                System.out.println("USER ALREADY EXISTS!!!!!");
-                return true;
-            } else {
-                return false;
+                if(!studentNumber.equalsIgnoreCase("null"))
+                {
+                    selectSQL += " and student_number = ?";
+                }
+
+                try {
+                    preparedStatement = connection.prepareStatement(selectSQL);
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, password);
+                    if(!studentNumber.equalsIgnoreCase("null"))
+                    {
+                        preparedStatement.setString(3, studentNumber);
+                    }
+
+                    results = preparedStatement.executeQuery();
+
+                    int count=0;
+
+                    while(results.next())
+                    {
+                        count=count+1;
+                    }
+
+                    if(count>=1)
+                    {
+                        System.out.println("USER ALREADY EXISTS!!!!!");
+                        return true;
+                    } else {
+                        System.out.println("USER DOES NOT EXIST!!!! REGISTERING USER NOW :D");
+                        return false;
+                    }
+
+
+            } catch (SQLException e)
+                {
+                    System.out.println("FAILED TO CHECK IF USER EXISTS");
+                    e.printStackTrace();
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
-    public void createNewUserinDB(String uuid, String studentNumber, String username, String email, String password)
+    public void createNewUserinDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
     {
-        String createNewUserStatement = "INSERT INTO users(uuid,student_number,username,full_name,email,password) VALUES (?,?,?,?,?,?)";
+        String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(createNewUserStatement);
@@ -72,6 +96,7 @@ public class DatabaseManager
             preparedStatement.setString(3, username);
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, password);
+            preparedStatement.setString(6, fullName);
 
             this.database.sendPreparedStatement(preparedStatement, false);
         } catch (SQLException e) {

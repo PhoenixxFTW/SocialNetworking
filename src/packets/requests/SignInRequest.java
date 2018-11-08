@@ -1,11 +1,11 @@
 package packets.requests;
 
-public class LoginRequest
+public class SignInRequest
 {
     private String username;
     private String password;
 
-    public LoginRequest()
+    public SignInRequest()
     {
 
     }

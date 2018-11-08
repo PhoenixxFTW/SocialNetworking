@@ -3,27 +3,23 @@ package client.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import client.application.ClientMain;
 import com.jfoenix.controls.*;
-import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 import client.dBConnection.DBHandler;
 import javafx.util.Duration;
+import packets.requests.SignInRequest;
 
 public class LoginController implements Initializable {
 
@@ -89,8 +85,24 @@ public class LoginController implements Initializable {
 	@FXML
 	public void signInAction(ActionEvent e)
     {
-        if(!ClientMain.getNetworkManager().client.isConnected())
+        if(ClientMain.getNetworkManager().client.isConnected())
         {
+
+            String usernameGiven = username.getText();
+            String passwordGiven = password.getText();
+
+            if(!usernameGiven.isEmpty() && !passwordGiven.isEmpty())
+            {
+                SignInRequest request = new SignInRequest();
+                request.setUsername(usernameGiven);
+                request.setPassword(passwordGiven);
+
+                ClientMain.getNetworkManager().sendMessageToServer(request);
+            } else {
+                //TODO Display missing entry text
+            }
+
+        } else {
             showNotification();
         }
         /*connection = handler.getConnection();

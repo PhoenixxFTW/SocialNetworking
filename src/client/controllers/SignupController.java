@@ -81,17 +81,15 @@ public class SignupController implements Initializable
 
     public void setRegistered(boolean isRegistered)
     {
-        if(isRegistered)
+        if(!isRegistered)
         {
             Platform.runLater(()->{
-                //System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
                 missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
                 missingEntry.setText("Registered Successfully!");
                 missingEntry.setVisible(true);
             });
         } else {
             Platform.runLater(()->{
-                //System.out.println("REGISTERED SUCCESSFULLY!!! IF STATEMENT");
                 missingEntry.setTextFill(Paint.valueOf(Color.RED.toString()));
                 missingEntry.setText("User already exists!");
                 missingEntry.setVisible(true);
@@ -129,6 +127,10 @@ public class SignupController implements Initializable
 	{
 	    if(ClientMain.getNetworkManager().client.isConnected())
 	    {
+	        //TODO Add a check to see if the email is valid
+            //TODO Add a check to see if password is certain characters long
+            //TODO Add a check to look for any vulgar language
+
             String studentNumber = student_number.getText();
             String usernameGiven = username.getText();
             String fullName = full_name.getText();
@@ -165,8 +167,6 @@ public class SignupController implements Initializable
                 missingEntry.setVisible(false);
             }
 
-
-
             if(!fullName.isEmpty() && !studentNumber.isEmpty() && !usernameGiven.isEmpty() && !emailGiven.isEmpty() && !passwordGiven.isEmpty() && !verified_password.getText().isEmpty() && (passwordGiven.equals(verified_password.getText())))
             {
                 String uuid = generateUUID().toString();
@@ -184,55 +184,6 @@ public class SignupController implements Initializable
                 request.setSignUpObject(signUpObject);
 
                 ClientMain.getNetworkManager().sendMessageToServer(request);
-
-            /*PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> {
-                if(isRegistered)
-                {
-                    System.out.println("REGISTERED SUCCESSFULLY!!!");
-                    missingEntry.setTextFill(Paint.valueOf(Color.GREEN.toString()));
-                    missingEntry.setText("Registered Successfully!");
-                    missingEntry.setVisible(true);
-                }
-            });
-            pause.play();*/
-
-
-            /*String insert = "INSERT INTO users(uuid,student_number,username,full_name,email,password) VALUES (?,?,?,?,?,?)";
-
-            connection = handler.getConnection();
-            try {
-                pst = connection.prepareStatement(insert);
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-
-            try {
-                String uuid = generateUUID().toString();
-                String studentNumber = studentNumber;
-                String usernameGiven = usernameGiven;
-                String fullName = fullName;
-                String emailGiven = emailGiven;
-                String passwordGiven = passwordGiven;
-
-                pst.setString(1, uuid);
-                pst.setString(2, studentNumber);
-                pst.setString(3, usernameGiven);
-                pst.setString(4, fullName);
-                pst.setString(5, emailGiven);
-                pst.setString(6, passwordGiven);
-
-                System.out.println("UUID: " + uuid);
-                System.out.println("student_number: " + studentNumber);
-                System.out.println("username: " + usernameGiven);
-                System.out.println("full_name: " + fullName);
-                System.out.println("email: " + emailGiven);
-                System.out.println("password: " + passwordGiven);
-
-                pst.executeUpdate();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }*/
 
             } else {
                 System.out.println("DATA IS EMPTY");

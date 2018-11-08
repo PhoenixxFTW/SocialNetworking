@@ -3,8 +3,9 @@ package packets;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Listener;
 import packets.objects.SignUpObject;
-import packets.requests.LoginRequest;
+import packets.requests.SignInRequest;
 import packets.requests.SignUpRequest;
+import packets.responses.SignInResponse;
 import packets.responses.SignUpResponse;
 
 import java.util.*;
@@ -27,12 +28,13 @@ public class PacketRegistry extends Listener
         kryo.register(String[].class);
 
         /** Client packets */
-        kryo.register(LoginRequest.class);
+        kryo.register(SignInRequest.class);
         kryo.register(SignUpRequest.class);
         //kryo.register(Packet_Message_Request.class);
 
         /** Server packets */
         kryo.register(SignUpResponse.class);
+        kryo.register(SignInResponse.class);
         //kryo.register(Packet_Handshake_Response.class);
         //kryo.register(Packet_Message_Response.class);
         //kryo.register(Packet_Notification_Response.class);
