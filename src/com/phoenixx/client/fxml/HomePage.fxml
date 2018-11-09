@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXToolbar?>
+<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor" minHeight="-Infinity" minWidth="-Infinity" prefHeight="543.0" prefWidth="752.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.HomePageController">
+   <children>
+      <JFXToolbar fx:id="toolBar" layoutX="186.0" prefHeight="50.0" prefWidth="569.0" style="-fx-background-color: #36394B;" styleClass="toolbar">
+         <right>
+            <HBox fx:id="toolBarRight" prefHeight="40.0" prefWidth="26.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lblMenu" prefHeight="38.0" prefWidth="21.0">
+                     <graphic>
+                        <MaterialDesignIconView fill="WHITE" glyphName="DOTS_VERTICAL" size="22" />
+                     </graphic>
+                  </Label>
+               </children>
+            </HBox>
+         </right>
+         <center>
+            <Text fx:id="welcome" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome ," wrappingWidth="170.13671875" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
+         </center>
+      </JFXToolbar>
+      <AnchorPane fx:id="holderPane" layoutX="186.0" layoutY="50.0" prefHeight="494.0" prefWidth="569.0" style="-fx-background-color: #FFFFFF;" />
+      <VBox fx:id="overflowContainer" prefHeight="104.0" prefWidth="164.0" styleClass="card-white" stylesheets="@custom.css">
+         <children>
+            <JFXButton fx:id="btnLogOut" onAction="#logOut" prefHeight="52.0" prefWidth="163.0" style="-fx-alignment: center-left;" text="Log out">
+               <font>
+                  <Font name="Roboto Medium" size="13.0" />
+               </font>
+               <graphic>
+                  <MaterialDesignIconView fill="#838080" glyphName="LOGOUT" size="16.0" wrappingWidth="36.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnExit" layoutX="10.0" layoutY="10.0" onAction="#exit" prefHeight="53.0" prefWidth="163.0" style="-fx-alignment: center-left;" text="Exit">
+               <font>
+                  <Font name="Roboto Medium" size="13.0" />
+               </font>
+               <graphic>
+                  <MaterialDesignIconView fill="#838080" glyphName="POWER" size="16.0" wrappingWidth="36.0" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Pane prefHeight="543.0" prefWidth="186.0" style="-fx-background-color: #36394B;">
+         <children>
+            <ImageView fitHeight="41.0" fitWidth="44.0" layoutX="66.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../Car/Resources/Car_100px.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="24.0" layoutY="55.0" prefHeight="41.0" prefWidth="139.0" text="Cars Review" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="22.0" />
+               </font>
+            </Label>
+            <Line endX="-50.0" layoutX="99.0" layoutY="105.0" startX="-100.0" stroke="WHITE" />
+            <AnchorPane layoutX="-6.0" layoutY="128.0" prefHeight="106.0" prefWidth="186.0" style="-fx-background-color: #373C4F;">
+               <children>
+                  <Label layoutX="22.0" layoutY="31.0" prefHeight="19.0" prefWidth="150.0" text="Welcome to Car Review" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="22.0" layoutY="50.0" prefHeight="17.0" prefWidth="139.0" text="Here, you will find " textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="22.0" layoutY="69.0" prefHeight="17.0" prefWidth="139.0" text="cars infomation" textFill="WHITE">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <Label layoutX="24.0" layoutY="255.0" prefHeight="26.0" prefWidth="96.0" text="Dashboard" textFill="#ebe0e0">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="24.0" layoutY="303.0" onAction="#homeBtn" prefHeight="25.0" prefWidth="112.0" text="HOME" textFill="#6b6f7e">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="24.0" layoutY="343.0" prefHeight="25.0" prefWidth="112.0" text="MY CARS" textFill="#6b6f7e">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="24.0" layoutY="382.0" prefHeight="25.0" prefWidth="112.0" text="ABOUT" textFill="#6b6f7e">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <Label alignment="CENTER" layoutX="148.0" layoutY="350.0" prefHeight="17.0" prefWidth="26.0" style="-fx-background-color: #1563CC;" text="0" textFill="WHITE" />
+            <JFXButton layoutX="36.0" layoutY="464.0" prefHeight="25.0" prefWidth="112.0" style="-fx-border-color: #FFFFFF;" text="CONTACT US" textFill="#e8e8e8" />
+            <Separator layoutX="24.0" layoutY="435.0" prefHeight="3.0" prefWidth="139.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
