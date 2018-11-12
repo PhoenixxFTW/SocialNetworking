@@ -3,10 +3,7 @@
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1177.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.HomeScreenController">
@@ -21,7 +18,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <JFXButton fx:id="nameButton" buttonType="RAISED" layoutX="1050.0" layoutY="4.0" ripplerFill="#2196f3" text="Phoenix" textFill="#a0a2ab" underline="true">
+      <JFXButton fx:id="nameButton" buttonType="RAISED" layoutX="1050.0" layoutY="4.0" onMouseClicked="#nameButtonClicked" ripplerFill="#2196f3" text="Phoenix" textFill="#a0a2ab" underline="true">
          <font>
             <Font size="15.0" />
          </font>

@@ -10,6 +10,7 @@ public class SignInResponse
 {
     private boolean canLogin;
     private String message;
+    private String uuid;
 
     public SignInResponse()
     {
@@ -24,11 +25,19 @@ public class SignInResponse
         this.message = message;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     public boolean canLogin() {
         return canLogin;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 }

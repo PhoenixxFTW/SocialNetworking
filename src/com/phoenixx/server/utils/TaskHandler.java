@@ -29,7 +29,7 @@ public class TaskHandler {
         }
     }
 
-    /** Add a task to this specific handler */
+    /** Add a task to this specific handlers */
     public void addTask(Task par1) {
         if(this.taskList.contains(par1) == false) {
             taskList.add(par1);

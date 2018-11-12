@@ -1,11 +1,12 @@
 package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.phoenixx.client.utils.ClientInfo;
+import com.phoenixx.client.application.ClientMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
@@ -21,12 +22,13 @@ public class HomeScreenController implements Initializable
     @FXML
     private JFXButton nameButton;
 
+    private String uuid;
+
     private static HomeScreenController instance;
 
     public HomeScreenController()
     {
         instance = this;
-        //nameButton.setText(ClientInfo.username);
     }
 
     public static HomeScreenController getInstance()
@@ -37,6 +39,18 @@ public class HomeScreenController implements Initializable
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
         nameButton.setStyle("-fx-text-inner-color: #a0a2ab;");
+        nameButton.setText(LoginController.getInstance().username.getText());
+    }
+
+    public void nameButtonClicked(MouseEvent mouseEvent)
+    {
+        System.out.println("nameButtonClicked = " + ClientMain.getClientUser().getUuid());
+    }
+
+    public void setUUID(String givenUuid)
+    {
+        uuid = givenUuid;
+        nameButton.setText(ClientMain.getClientUser().getUuid());
     }
 
     private void loadUI(String ui)
@@ -48,6 +62,8 @@ public class HomeScreenController implements Initializable
         } catch (IOException e){
             e.printStackTrace();
         }
+
         anchorPane.getChildren().setAll(root);
     }
+
 }

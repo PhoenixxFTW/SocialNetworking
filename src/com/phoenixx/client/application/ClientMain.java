@@ -1,8 +1,10 @@
 package com.phoenixx.client.application;
 
 import com.phoenixx.client.network.ClientNetworkMain;
+import com.phoenixx.client.utils.ClientUser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,7 +13,14 @@ public class ClientMain extends Application
 {
 	public static Stage parentWindow;
 
+    public static final String ICON_IMAGE_LOC = "icon.png";
+
+	private static ClientUser clientUser;
 	private static ClientNetworkMain networkManager;
+
+    public static void setStageIcon(Stage stage) {
+        stage.getIcons().add(new Image(ICON_IMAGE_LOC));
+    }
 
     @Override
 	public void start(Stage primaryStage) {
@@ -26,10 +35,13 @@ public class ClientMain extends Application
 			primaryStage.setTitle("Phoenix Studios");
 			primaryStage.setResizable(false);
 
+            setStageIcon(primaryStage);
+
 			primaryStage.setOnCloseRequest(event -> {
                 getNetworkManager().shutdown();
             });
 
+			clientUser = new ClientUser();
 
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -61,5 +73,9 @@ public class ClientMain extends Application
 	public static ClientNetworkMain getNetworkManager()
 	{
 		return networkManager;
+	}
+
+	public static ClientUser getClientUser() {
+		return clientUser;
 	}
 }

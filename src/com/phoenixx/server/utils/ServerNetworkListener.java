@@ -69,6 +69,7 @@ public class ServerNetworkListener extends Listener
 
             response.setCanLogin(doesUserExist);
             response.setMessage(doesUserExist ? "Successfully registered!" : "Unable to find user!" );
+            response.setUuid("testUUID");
 
             ServerNetworkMain.server.sendToTCP(connectionID, response);
 

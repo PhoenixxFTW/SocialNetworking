@@ -1,5 +1,6 @@
 package com.phoenixx.client.utils;
 
+import com.phoenixx.client.application.ClientMain;
 import com.phoenixx.client.controllers.LoginController;
 import com.phoenixx.client.controllers.SignupController;
 import com.phoenixx.client.network.ClientNetworkMain;
@@ -29,8 +30,9 @@ public class ClientNetworkListener extends Listener {
 
             System.out.println("SIGN IN RESPONSE RECEIVED canLogin = " + response.canLogin());
             System.out.println("message = " + response.getMessage());
+            System.out.println("uuid = " + response.getUuid());
 
-            ClientInfo.uuid = response.getMessage();
+            ClientMain.getClientUser().setUuid(response.getUuid());
             LoginController.getInstance().setCanLogin(response.canLogin());
         }
     }
@@ -55,6 +57,4 @@ public class ClientNetworkListener extends Listener {
             ClientNetworkMain.attemptReconnect();
         }
     }
-
-
 }

@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import com.phoenixx.client.application.ClientMain;
 import com.jfoenix.controls.*;
-import com.phoenixx.client.utils.ClientInfo;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -68,6 +67,8 @@ public class LoginController implements Initializable {
 	private java.sql.PreparedStatement pst;
 	private static LoginController instance;
 
+	public static String usernameGiven1;
+
 	public LoginController()
 	{
 		instance = this;
@@ -93,6 +94,8 @@ public class LoginController implements Initializable {
         {
             String usernameGiven = username.getText();
             String passwordGiven = password.getText();
+
+            usernameGiven1=usernameGiven;
 
             if(!usernameGiven.isEmpty() && !passwordGiven.isEmpty())
             {
@@ -134,14 +137,7 @@ public class LoginController implements Initializable {
 
     private void loadUI(String ui)
     {
-        Parent root = null;
 
-        try{
-            root = FXMLLoader.load(getClass().getResource(ui));
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-        anchorPane.getChildren().setAll(root);
     }
 
     public void setCanLogin(boolean canLogin) {
@@ -149,7 +145,13 @@ public class LoginController implements Initializable {
 	    {
             Platform.runLater(()->{
                 this.canLogin = canLogin;
-                loadUI("/com/phoenixx/client/fxml/HomeScreen.fxml");
+                Parent root = null;
+                try{
+                    root = FXMLLoader.load(getClass().getResource("/com/phoenixx/client/fxml/HomeScreen.fxml"));
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+                anchorPane.getChildren().setAll(root);
             });
         } else {
 	        //TODO finish this
