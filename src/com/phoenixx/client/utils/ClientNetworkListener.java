@@ -1,6 +1,7 @@
 package com.phoenixx.client.utils;
 
 import com.phoenixx.client.application.ClientMain;
+import com.phoenixx.client.controllers.HomeScreenController;
 import com.phoenixx.client.controllers.LoginController;
 import com.phoenixx.client.controllers.SignupController;
 import com.phoenixx.client.network.ClientNetworkMain;
@@ -8,6 +9,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 
 public class ClientNetworkListener extends Listener {
 
@@ -28,12 +34,11 @@ public class ClientNetworkListener extends Listener {
         {
             SignInResponse response = (SignInResponse)object;
 
-            System.out.println("SIGN IN RESPONSE RECEIVED canLogin = " + response.canLogin());
             System.out.println("message = " + response.getMessage());
-            System.out.println("uuid = " + response.getUuid());
+            System.out.println("userObject full name = " + response.getClientUserObject().getFullName());
 
-            ClientMain.getClientUser().setUuid(response.getUuid());
-            LoginController.getInstance().setCanLogin(response.canLogin());
+            //TODO Either here, or after the user loads his data using UUID send the users entire object to client
+            LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject());
         }
     }
 

@@ -1,5 +1,7 @@
 package com.phoenixx.packets.responses;
 
+import com.phoenixx.packets.objects.ClientUserObject;
+
 /**
  * @author Junaid Talpur
  * - phoenix
@@ -10,7 +12,7 @@ public class SignInResponse
 {
     private boolean canLogin;
     private String message;
-    private String uuid;
+    private ClientUserObject clientUserObject;
 
     public SignInResponse()
     {
@@ -25,8 +27,8 @@ public class SignInResponse
         this.message = message;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setClientUserObject(ClientUserObject clientUserObject) {
+        this.clientUserObject = clientUserObject;
     }
 
     public boolean canLogin() {
@@ -37,7 +39,7 @@ public class SignInResponse
         return message;
     }
 
-    public String getUuid() {
-        return uuid;
+    public ClientUserObject getClientUserObject() {
+        return clientUserObject;
     }
 }

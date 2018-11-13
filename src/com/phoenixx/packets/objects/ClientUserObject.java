@@ -1,18 +1,11 @@
-package com.phoenixx.client.utils;
+package com.phoenixx.packets.objects;
 
-public class ClientUser
+public class ClientUserObject
 {
     private String uuid;
     private String username;
     private String fullName;
     private String studentNumber;
-
-    private ClientUser instance;
-
-    public ClientUser()
-    {
-        instance = this;
-    }
 
     public void setUuid(String uuid) {
         uuid = uuid;
@@ -46,7 +39,4 @@ public class ClientUser
         return studentNumber;
     }
 
-    public ClientUser getInstance() {
-        return instance;
-    }
 }

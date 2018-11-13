@@ -44,13 +44,19 @@ public class HomeScreenController implements Initializable
 
     public void nameButtonClicked(MouseEvent mouseEvent)
     {
-        System.out.println("nameButtonClicked = " + ClientMain.getClientUser().getUuid());
+        //TODO Setup a settings menu
     }
 
     public void setUUID(String givenUuid)
     {
         uuid = givenUuid;
-        nameButton.setText(ClientMain.getClientUser().getUuid());
+        try{
+            nameButton.setText(givenUuid);
+        } catch(Exception ex) {
+            System.out.println("There was an error while setting the name text! setUUID method in HomeScreenController");
+            ex.printStackTrace();
+        }
+
     }
 
     private void loadUI(String ui)

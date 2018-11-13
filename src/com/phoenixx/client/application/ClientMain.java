@@ -1,7 +1,6 @@
 package com.phoenixx.client.application;
 
 import com.phoenixx.client.network.ClientNetworkMain;
-import com.phoenixx.client.utils.ClientUser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
@@ -15,7 +14,6 @@ public class ClientMain extends Application
 
     public static final String ICON_IMAGE_LOC = "icon.png";
 
-	private static ClientUser clientUser;
 	private static ClientNetworkMain networkManager;
 
     public static void setStageIcon(Stage stage) {
@@ -41,26 +39,12 @@ public class ClientMain extends Application
                 getNetworkManager().shutdown();
             });
 
-			clientUser = new ClientUser();
-
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] args) {
-
-        /*if(ClientNetworkMain.shouldConnect)
-        {
-            try {
-                ClientNetworkMain.initializeClientConnection(ClientNetworkMain.NETWORK_IP, ClientNetworkMain.NETWORK_TCP_PORT, ClientNetworkMain.NETWORK_UDP_PORT);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                ClientNetworkMain.attemptReconnect();
-            }
-        }*/
-
         newNetworkManager();
         launch(args);
     }
@@ -75,7 +59,4 @@ public class ClientMain extends Application
 		return networkManager;
 	}
 
-	public static ClientUser getClientUser() {
-		return clientUser;
-	}
 }

@@ -1,5 +1,8 @@
 package com.phoenixx.server.managers.database;
 
+import com.phoenixx.packets.objects.ClientUserObject;
+
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,6 +29,67 @@ public class DatabaseManager
         //database.sendPreparedStatement(CREATE_USERFRIENDS_TABLE, false);
     }
 
+    public ClientUserObject getUserData(String username, String password)
+    {
+        Connection connection = database.getConnection();
+        ResultSet results;
+        PreparedStatement preparedStatement;
+
+        ClientUserObject clientUserObject = new ClientUserObject();
+
+        try {
+            if(!connection.isClosed() && connection !=null)
+            {
+                String selectSQL = "SELECT * from userdata where username = ? and password = ?";
+
+                try {
+                    preparedStatement = connection.prepareStatement(selectSQL);
+                    preparedStatement.setString(1, username);
+                    preparedStatement.setString(2, password);
+
+                    results = preparedStatement.executeQuery();
+
+                    int count=0;
+
+                    while(results.next())
+                    {
+                        count=count+1;
+                    }
+
+                    if(count>1)
+                    {
+                        System.out.println("There were 2 users with matching UUID's! This is not normal! Please have a look at the database.");
+                        return null;
+                    } else {
+
+                        //FIXME java.sql.SQLException: After end of result set
+                        clientUserObject.setUuid(results.getString("uuid"));
+                        clientUserObject.setUsername(results.getString("username"));
+                        clientUserObject.setFullName(results.getString("full_name"));
+                        clientUserObject.setStudentNumber(results.getString("student_number"));
+                        return clientUserObject;
+                    }
+
+
+                } catch (SQLException e)
+                {
+                    System.out.println("FAILED TO CHECK IF USER EXISTS");
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Checks if a user exists, also checks the users student number just so there are not more then 2
+     * @param username users username given
+     * @param password users password
+     * @param studentNumber uses student number
+     * @return
+     */
     public boolean doesUserExist(String username, String password, String studentNumber)
     {
         java.sql.Connection connection = database.getConnection();
@@ -62,10 +126,9 @@ public class DatabaseManager
 
                     if(count>=1)
                     {
-                        System.out.println("USER ALREADY EXISTS!!!!!");
                         return true;
                     } else {
-                        System.out.println("USER DOES NOT EXIST!!!! REGISTERING USER NOW :D");
+                        System.out.println("USER DOES NOT EXIST!!!!");
                         return false;
                     }
 
@@ -82,6 +145,15 @@ public class DatabaseManager
         return false;
     }
 
+    /**
+     * Creates a new user in the database
+     * @param uuid randomly generated UUID
+     * @param studentNumber student number given
+     * @param username username user had chosen when signing up
+     * @param email email given
+     * @param password password given
+     * @param fullName users full name
+     */
     public void createNewUserinDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
     {
         String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name) VALUES (?,?,?,?,?,?)";

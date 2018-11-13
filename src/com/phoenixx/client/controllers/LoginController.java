@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 
 import com.phoenixx.client.application.ClientMain;
 import com.jfoenix.controls.*;
+import com.phoenixx.packets.objects.ClientUserObject;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import com.phoenixx.client.dBConnection.DBHandler;
 import javafx.util.Duration;
@@ -137,17 +139,31 @@ public class LoginController implements Initializable {
 
     private void loadUI(String ui)
     {
+        Parent root = null;
 
+        try{
+            root = FXMLLoader.load(getClass().getResource(ui));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        anchorPane.getChildren().setAll(root);
     }
 
-    public void setCanLogin(boolean canLogin) {
+    public void setCanLogin(boolean canLogin, ClientUserObject clientUserObject) {
 	    if(canLogin)
 	    {
             Platform.runLater(()->{
                 this.canLogin = canLogin;
+
                 Parent root = null;
                 try{
-                    root = FXMLLoader.load(getClass().getResource("/com/phoenixx/client/fxml/HomeScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/phoenixx/client/fxml/HomeScreen.fxml"));
+                    root = loader.load();
+
+                    HomeScreenController homeScreenController = loader.getController();
+
+                    homeScreenController.setUUID(clientUserObject.getFullName());
                 } catch (IOException e){
                     e.printStackTrace();
                 }

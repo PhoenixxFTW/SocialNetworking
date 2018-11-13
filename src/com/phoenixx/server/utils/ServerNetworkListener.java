@@ -2,6 +2,8 @@ package com.phoenixx.server.utils;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Server;
+import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.SignUpObject;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
@@ -69,12 +71,17 @@ public class ServerNetworkListener extends Listener
 
             response.setCanLogin(doesUserExist);
             response.setMessage(doesUserExist ? "Successfully registered!" : "Unable to find user!" );
-            response.setUuid("testUUID");
 
-            ServerNetworkMain.server.sendToTCP(connectionID, response);
+            ClientUserObject clientUserObject = ServerNetworkMain.getDatabaseManager().getUserData(usernameGiven, passwordGiven);
 
-            System.out.println("Login request received from: " + request.getUsername());
-            System.out.println("Password is :" + request.getPassword());
+            if(clientUserObject != null)
+            {
+                System.out.println("User " + usernameGiven + " has data in the database, sending client data now...");
+                response.setClientUserObject(clientUserObject);
+
+                ServerNetworkMain.server.sendToTCP(connectionID, response);
+
+            }
         }
     }
 
