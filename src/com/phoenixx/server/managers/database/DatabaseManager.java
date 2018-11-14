@@ -35,8 +35,6 @@ public class DatabaseManager
         ResultSet results;
         PreparedStatement preparedStatement;
 
-        ClientUserObject clientUserObject = new ClientUserObject();
-
         try {
             if(!connection.isClosed() && connection !=null)
             {
@@ -49,30 +47,19 @@ public class DatabaseManager
 
                     results = preparedStatement.executeQuery();
 
-                    int count=0;
-
                     while(results.next())
                     {
-                        count=count+1;
-                    }
+                        String uuid = results.getString(1);
+                        String studentNumber = results.getString(2);
+                        String usernameFromDb = results.getString(3);
+                        String fullNameFromDb = results.getString(6);
 
-                    if(count>1)
-                    {
-                        System.out.println("There were 2 users with matching UUID's! This is not normal! Please have a look at the database.");
-                        return null;
-                    } else {
+                        ClientUserObject clientUserObject = new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
 
-                        //FIXME java.sql.SQLException: After end of result set
-                        clientUserObject.setUuid(results.getString("uuid"));
-                        clientUserObject.setUsername(results.getString("username"));
-                        clientUserObject.setFullName(results.getString("full_name"));
-                        clientUserObject.setStudentNumber(results.getString("student_number"));
                         return clientUserObject;
                     }
 
-
-                } catch (SQLException e)
-                {
+                } catch (SQLException e) {
                     System.out.println("FAILED TO CHECK IF USER EXISTS");
                     e.printStackTrace();
                 }
@@ -80,6 +67,7 @@ public class DatabaseManager
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

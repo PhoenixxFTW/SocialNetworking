@@ -1,13 +1,13 @@
 package com.phoenixx.client.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.util.ResourceBundle;
-
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import com.phoenixx.client.application.ClientMain;
-import com.jfoenix.controls.*;
+import com.phoenixx.client.dBConnection.DBHandler;
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.requests.SignInRequest;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -18,11 +18,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import com.phoenixx.client.dBConnection.DBHandler;
 import javafx.util.Duration;
-import com.phoenixx.packets.requests.SignInRequest;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
@@ -162,15 +164,15 @@ public class LoginController implements Initializable {
                     root = loader.load();
 
                     HomeScreenController homeScreenController = loader.getController();
+                    homeScreenController.setClientUser(clientUserObject);
 
-                    homeScreenController.setUUID(clientUserObject.getFullName());
                 } catch (IOException e){
                     e.printStackTrace();
                 }
                 anchorPane.getChildren().setAll(root);
             });
         } else {
-	        //TODO finish this
+            noUserFound.setVisible(true);
         }
     }
 

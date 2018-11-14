@@ -40,6 +40,6 @@ public class SignInResponse
     }
 
     public ClientUserObject getClientUserObject() {
-        return clientUserObject;
+        return this.clientUserObject;
     }
 }

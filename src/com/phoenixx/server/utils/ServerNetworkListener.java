@@ -2,7 +2,6 @@ package com.phoenixx.server.utils;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.esotericsoftware.kryonet.Server;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.SignUpObject;
 import com.phoenixx.packets.requests.SignInRequest;
@@ -74,13 +73,12 @@ public class ServerNetworkListener extends Listener
 
             ClientUserObject clientUserObject = ServerNetworkMain.getDatabaseManager().getUserData(usernameGiven, passwordGiven);
 
-            if(clientUserObject != null)
+            if(clientUserObject != null && doesUserExist)
             {
-                System.out.println("User " + usernameGiven + " has data in the database, sending client data now...");
                 response.setClientUserObject(clientUserObject);
-
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
-
+            } else if (!doesUserExist) {
+                ServerNetworkMain.server.sendToTCP(connectionID, response);
             }
         }
     }

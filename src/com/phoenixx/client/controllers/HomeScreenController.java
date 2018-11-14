@@ -1,7 +1,7 @@
 package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.phoenixx.client.application.ClientMain;
+import com.phoenixx.packets.objects.ClientUserObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +23,8 @@ public class HomeScreenController implements Initializable
     private JFXButton nameButton;
 
     private String uuid;
+
+    private ClientUserObject clientUserObject;
 
     private static HomeScreenController instance;
 
@@ -47,16 +49,16 @@ public class HomeScreenController implements Initializable
         //TODO Setup a settings menu
     }
 
-    public void setUUID(String givenUuid)
+    public void setClientUser(ClientUserObject clientUser)
     {
-        uuid = givenUuid;
+        this.clientUserObject = clientUser;
+
         try{
-            nameButton.setText(givenUuid);
+            nameButton.setText(clientUser.getFullName());
         } catch(Exception ex) {
             System.out.println("There was an error while setting the name text! setUUID method in HomeScreenController");
             ex.printStackTrace();
         }
-
     }
 
     private void loadUI(String ui)

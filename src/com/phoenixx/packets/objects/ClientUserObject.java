@@ -7,6 +7,19 @@ public class ClientUserObject
     private String fullName;
     private String studentNumber;
 
+    public ClientUserObject()
+    {
+
+    }
+
+    public ClientUserObject(String uuid, String studentNumber, String username, String fullName)
+    {
+        this.uuid = uuid;
+        this.username = username;
+        this.fullName = fullName;
+        this.studentNumber = studentNumber;
+    }
+
     public void setUuid(String uuid) {
         uuid = uuid;
     }
