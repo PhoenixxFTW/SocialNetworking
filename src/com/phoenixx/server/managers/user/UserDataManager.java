@@ -1,5 +1,7 @@
 package com.phoenixx.server.managers.user;
 
+import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.server.ServerNetworkMain;
 import com.phoenixx.server.utils.TaskHandler;
 
 import java.util.ArrayList;
@@ -10,14 +12,14 @@ import java.util.TreeMap;
 public class UserDataManager extends TaskHandler {
 
     /** A Mapping of all UserData loaded. UUID, UserData */
-    public TreeMap<String, UserData> userDataMapping = new TreeMap<String, UserData>(String.CASE_INSENSITIVE_ORDER);
+    public TreeMap<String, ClientUserObject> userDataMapping = new TreeMap<String, ClientUserObject>(String.CASE_INSENSITIVE_ORDER);
 
     /** 30 seconds: A delay for each client data to be updated */
     private int delaySecond = 0;
     private int delaySecondMax = (20 * 60 * 5); //5 mins
 
     /** List of data to save */
-    public Queue<UserData> dataToSave = new LinkedList<UserData>();
+    public Queue<ClientUserObject> dataToSave = new LinkedList<ClientUserObject>();
 
     public UserDataManager() {
     }
@@ -27,10 +29,10 @@ public class UserDataManager extends TaskHandler {
         if (this.delaySecond++ >= this.delaySecondMax) {
             this.dataToSave.clear();
             ArrayList<String> connectedUsers = getAllUsersConnected();
-            ArrayList<UserData> dataList = new ArrayList<UserData>(userDataMapping.values());
+            ArrayList<ClientUserObject> dataList = new ArrayList<ClientUserObject>(userDataMapping.values());
 
             if (dataList.size() > 0) {
-                for (UserData data : dataList) {
+                for (ClientUserObject data : dataList) {
                     data.setOnlineStatus(connectedUsers.contains(data.getUsername()));
 
                     if (data.isOnline()) {
@@ -50,24 +52,36 @@ public class UserDataManager extends TaskHandler {
 
         this.runTasks();
     }
-/*
-    *//** Get a player's data from there UUID, will create data if none exists *//*
-    public UserData getPlayerDataFromUUID(String uuid, boolean forced) {
-        if (uuid != null && uuid.length() > 0) {
-            if (this.userDataMapping.containsKey(uuid) == false) {
+
+    /** Get a player's data from there UUID, will create data if none exists */
+    public ClientUserObject getPlayerData(String username, String password, boolean forced) {
+        if (username != null && username.length() > 0) {
+            if (!this.userDataMapping.containsKey(username)) {
                 if(forced) {
-                    this.userDataMapping.put(uuid, loadPotentialPlayerDataForced(uuid));
+                    ClientUserObject clientUserObject = ServerNetworkMain.getDatabaseManager().getUserData(username, password);
+                    this.userDataMapping.put(username, clientUserObject);
+                    return clientUserObject;
                 } else {
-                    this.loadPotentialPlayerData(uuid);
-                    return null;
+                    return this.getPlayerDataLocal(username);
                 }
             }
 
-            return this.userDataMapping.get(uuid);
+            return this.userDataMapping.get(username);
         }
 
         return null;
-    }*/
+    }
+
+    /** Loads potential player data from the cloud's folder */
+    public ClientUserObject getPlayerDataLocal(String username) {
+        if(username != null) {
+            if(this.userDataMapping.containsKey(username)) {
+                ClientUserObject clientUserObject = this.userDataMapping.get(username);
+                return clientUserObject;
+            }
+        }
+        return null;
+    }
 
 /*    *//** Will return null if the User's UUID is not loaded yet *//*
     public UserData getUserData(String par1) {

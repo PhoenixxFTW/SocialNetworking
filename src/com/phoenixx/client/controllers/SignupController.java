@@ -1,11 +1,13 @@
 package com.phoenixx.client.controllers;
 
 
-import com.phoenixx.client.application.ClientMain;
-import com.phoenixx.client.dBConnection.DBHandler;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.phoenixx.client.application.ClientMain;
+import com.phoenixx.client.dBConnection.DBHandler;
+import com.phoenixx.packets.objects.SignUpObject;
+import com.phoenixx.packets.requests.SignUpRequest;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,21 +21,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import com.phoenixx.packets.objects.SignUpObject;
-import com.phoenixx.packets.requests.SignUpRequest;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
-
 import java.util.UUID;
 
 public class SignupController implements Initializable
 {
 
-    //TODO Use kryonet for requests to db
     //TODO setup password encryption
 
     @FXML

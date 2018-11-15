@@ -73,6 +73,8 @@ public class ServerNetworkListener extends Listener
 
             ClientUserObject clientUserObject = ServerNetworkMain.getDatabaseManager().getUserData(usernameGiven, passwordGiven);
 
+            ServerNetworkMain.getUserDataManager();
+
             if(clientUserObject != null && doesUserExist)
             {
                 response.setClientUserObject(clientUserObject);

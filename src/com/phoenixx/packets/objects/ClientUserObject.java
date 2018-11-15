@@ -1,11 +1,29 @@
 package com.phoenixx.packets.objects;
 
+import com.phoenixx.server.managers.user.UserRank;
+
+import java.util.ArrayList;
+
 public class ClientUserObject
 {
     private String uuid;
     private String username;
     private String fullName;
     private String studentNumber;
+
+    private boolean isOnline = false;
+
+    /** User rank */
+    public UserRank currentRank = UserRank.STUDENT;
+
+    /** The users status set up in there profile */
+    public String mood = "I am a newb, tehe :D";
+
+    /** List of friends this player has */
+    public ArrayList<String> friendsList = new ArrayList<String>();
+
+    /** List of pending friend requests */
+    public ArrayList<String> pendingFriendsList = new ArrayList<String>();
 
     public ClientUserObject()
     {
@@ -50,6 +68,28 @@ public class ClientUserObject
 
     public String getStudentNumber() {
         return studentNumber;
+    }
+
+    public boolean isOnline() {
+        return this.isOnline;
+    }
+
+    public void setOnlineStatus(boolean par1) {
+        this.isOnline = par1;
+    }
+
+    public UserRank getCurrentRank() {
+        return currentRank;
+    }
+
+    public void notifyFriendsOnline() {
+        for(int i = 0; i < this.friendsList.size(); i++) {
+            /*UserData data = UserDataManager.getData(this.friendsList.get(i));
+
+            if(data != null && data.isOnline) {
+                Notification.sendNotification(data.getUsername(), this.getUsername() + " is online!");
+            }*/
+        }
     }
 
 }
