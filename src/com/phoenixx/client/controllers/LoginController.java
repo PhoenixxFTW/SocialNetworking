@@ -152,11 +152,11 @@ public class LoginController implements Initializable {
         anchorPane.getChildren().setAll(root);
     }
 
-    public void setCanLogin(boolean canLogin, ClientUserObject clientUserObject) {
-	    if(canLogin)
+    public void setCanLogin(boolean canLogin1, ClientUserObject clientUserObject) {
+	    if(canLogin1)
 	    {
             Platform.runLater(()->{
-                this.canLogin = canLogin;
+                this.canLogin = canLogin1;
 
                 Parent root = null;
                 try{
@@ -169,7 +169,12 @@ public class LoginController implements Initializable {
                 } catch (IOException e){
                     e.printStackTrace();
                 }
-                anchorPane.getChildren().setAll(root);
+                try{
+                    anchorPane.getChildren().setAll(root);
+                }catch (NullPointerException ex){
+                    ex.printStackTrace();
+                }
+
             });
         } else {
             noUserFound.setVisible(true);

@@ -1,7 +1,5 @@
 package com.phoenixx.packets.objects;
 
-import com.phoenixx.server.managers.user.UserRank;
-
 import java.util.ArrayList;
 
 public class ClientUserObject
@@ -14,7 +12,7 @@ public class ClientUserObject
     private boolean isOnline = false;
 
     /** User rank */
-    public UserRank currentRank = UserRank.STUDENT;
+    //public UserRank currentRank = UserRank.STUDENT;
 
     /** The users status set up in there profile */
     public String mood = "I am a newb, tehe :D";
@@ -78,9 +76,9 @@ public class ClientUserObject
         this.isOnline = par1;
     }
 
-    public UserRank getCurrentRank() {
+    /*public UserRank getCurrentRank() {
         return currentRank;
-    }
+    }*/
 
     public void notifyFriendsOnline() {
         for(int i = 0; i < this.friendsList.size(); i++) {
