@@ -43,7 +43,7 @@ public class ServerNetworkListener extends Listener
                 System.out.println("password = " + passwordGiven);
                 System.out.println("DOES USER EXIST = " + doesUserExist);
 
-                ServerNetworkMain.getDatabaseManager().createNewUserinDB(uuid, studentNumber, usernameGiven, emailGiven,passwordGiven, fullName);
+                ServerNetworkMain.getDatabaseManager().createNewUserInDB(uuid, studentNumber, usernameGiven, emailGiven,passwordGiven, fullName);
 
                 SignUpResponse response = new SignUpResponse();
 

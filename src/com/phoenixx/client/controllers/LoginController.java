@@ -142,7 +142,11 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
 
-        anchorPane.getChildren().setAll(root);
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 
     public void setCanLogin(boolean canLogin1, ClientUserObject clientUserObject) {

@@ -6,10 +6,24 @@
 .button:hover{
 -fx-background-color : #10165F;
 }
+
 .button:pressed
 {
 -fx-background-color : #1620A1;
 }
+
+.jfx-button{
+    -fx-background-color : #2D3447;
+}
+
+.jfx-button:hover{
+    -fx-background-color : #515A71;
+}
+
+.jfx-button:pressed{
+    -fx-background-color : #798ba7;
+}
+
 
 .scroll-pane {
     -fx-background-color: #02030A;

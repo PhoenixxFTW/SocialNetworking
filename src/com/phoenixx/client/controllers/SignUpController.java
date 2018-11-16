@@ -218,7 +218,11 @@ public class SignUpController implements Initializable
         } catch (IOException e){
             e.printStackTrace();
         }
-        anchorPane.getChildren().setAll(root);
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 }
 

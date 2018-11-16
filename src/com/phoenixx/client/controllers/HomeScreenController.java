@@ -1,5 +1,6 @@
 package com.phoenixx.client.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import com.phoenixx.packets.objects.ClientUserObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,7 +56,8 @@ public class HomeScreenController implements Initializable
     @FXML
     private VBox postListPane = null;
 
-    private String uuid;
+    @FXML
+    public JFXButton createPostButton;
 
     private ClientUserObject clientUserObject;
 
@@ -85,6 +87,8 @@ public class HomeScreenController implements Initializable
         //TODO Get image from ClientObject / Database
         setProfilePic("https://i.imgur.com/rLTnjje.png");
 
+        setupPosts();
+
         try{
         } catch(Exception ex) {
             System.out.println("There was an error while setting the name text! setUUID method in HomeScreenController");
@@ -96,26 +100,7 @@ public class HomeScreenController implements Initializable
     {
         //TODO Setup posts instead of "items"
         if (actionEvent.getSource() == homeButton) {
-            Node[] nodes = new Node[10];
-            for (int i = 0; i < nodes.length; i++) {
-                try {
 
-                    final int j = i;
-                    nodes[i] = FXMLLoader.load(getClass().getResource("/fxml/Item.fxml"));
-
-                    //give the items some effect
-
-                    nodes[i].setOnMouseEntered(event -> {
-                        nodes[j].setStyle("-fx-background-color : #0A0E3F");
-                    });
-                    nodes[i].setOnMouseExited(event -> {
-                        nodes[j].setStyle("-fx-background-color : #02030A");
-                    });
-                    postListPane.getChildren().add(nodes[i]);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             System.out.println("Home button pressed!!!");
         }
         if (actionEvent.getSource() == friendsButton) {
@@ -141,6 +126,31 @@ public class HomeScreenController implements Initializable
                 login.setResizable(false);
             } catch (IOException e) {
 
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setupPosts()
+    {
+        postsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        Node[] nodes = new Node[10];
+        for (int i = 0; i < nodes.length; i++) {
+            try {
+
+                final int j = i;
+                nodes[i] = FXMLLoader.load(getClass().getResource("/fxml/Post.fxml"));
+
+                //give the items some effect
+
+                nodes[i].setOnMouseEntered(event -> {
+                    nodes[j].setStyle("-fx-background-color : #0A0E3F");
+                });
+                nodes[i].setOnMouseExited(event -> {
+                    nodes[j].setStyle("-fx-background-color : #02030A");
+                });
+                postListPane.getChildren().add(nodes[i]);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -185,6 +195,10 @@ public class HomeScreenController implements Initializable
             e.printStackTrace();
         }
 
-        anchorPane.getChildren().setAll(root);
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 }

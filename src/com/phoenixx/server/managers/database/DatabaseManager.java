@@ -1,11 +1,9 @@
 package com.phoenixx.server.managers.database;
 
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.objects.PostDataObject;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DatabaseManager
 {
@@ -21,11 +19,11 @@ public class DatabaseManager
     {
         //TODO Add dateJoined
         String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, PRIMARY KEY (uuid));";
-        String CREATE_USERPROFILE_TABLE = "CREATE TABLE IF NOT EXISTS UserProfile (uuid varchar(45) NOT NULL, status TEXT, mood TEXT, clanTag varchar(4), profileShowcase JSON, PRIMARY KEY (uuid));";
+        String CREATE_POSTS_TABLE = "CREATE TABLE IF NOT EXISTS PostData (post_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, owner_uuid varchar(50), date_created TIMESTAMP, tags TEXT, post_title TEXT, post_text MEDIUMTEXT);";
         String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
 
         this.database.sendPreparedStatement(CREATE_USERS_TABLE, false);
-        //database.sendPreparedStatement(CREATE_USERPROFILE_TABLE, false);
+        this.database.sendPreparedStatement(CREATE_POSTS_TABLE, false);
         //database.sendPreparedStatement(CREATE_USERFRIENDS_TABLE, false);
     }
 
@@ -54,9 +52,7 @@ public class DatabaseManager
                         String usernameFromDb = results.getString(3);
                         String fullNameFromDb = results.getString(6);
 
-                        ClientUserObject clientUserObject = new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
-
-                        return clientUserObject;
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
                     }
 
                 } catch (SQLException e) {
@@ -80,7 +76,7 @@ public class DatabaseManager
      */
     public boolean doesUserExist(String username, String password, String studentNumber)
     {
-        java.sql.Connection connection = database.getConnection();
+        Connection connection = database.getConnection();
         ResultSet results;
         PreparedStatement preparedStatement;
 
@@ -142,7 +138,7 @@ public class DatabaseManager
      * @param password password given
      * @param fullName users full name
      */
-    public void createNewUserinDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
+    public void createNewUserInDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
     {
         String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name) VALUES (?,?,?,?,?,?)";
 
@@ -160,7 +156,69 @@ public class DatabaseManager
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
+    public PostDataObject getPostData(int postID)
+    {
+        Connection connection = database.getConnection();
+        ResultSet results;
+        PreparedStatement preparedStatement;
 
+        try {
+            if(!connection.isClosed() && connection !=null)
+            {
+                String selectSQL = "SELECT * from postdata where post_id = ?";
+
+                try {
+                    preparedStatement = connection.prepareStatement(selectSQL);
+                    preparedStatement.setInt(1, postID);
+
+                    results = preparedStatement.executeQuery();
+
+                    while(results.next())
+                    {
+                        String ownerUUID = results.getString(2);
+                        Timestamp dateCreated = results.getTimestamp(3);
+                        String tags = results.getString(4);
+                        String postTitle = results.getString(5);
+                        String postText = results.getString(6);
+
+                        return new PostDataObject(postID, ownerUUID, dateCreated.toLocalDateTime().toString(), tags, postTitle, postText);
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("FAILED TO GET POST DATA");
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Creates a new "forum post" to be displayed on the HomeScreen
+     * @param ownerUUID UUID of the user who made the post
+     * @param tags Tags the user set to the post, so we can filter by them later on
+     * @param postTitle Name of the post
+     * @param postText Actual text from the post
+     */
+    public void createNewPost(String ownerUUID, String tags, String postTitle, String postText)
+    {
+        String createNewUserStatement = "INSERT INTO postdata(owner_uuid,date_created,tags,post_title,post_text) VALUES (?,?,?,?,?)";
+
+        try {
+            PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(createNewUserStatement);
+
+            preparedStatement.setString(1, ownerUUID);
+            preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(3, tags);
+            preparedStatement.setString(4, postTitle);
+            preparedStatement.setString(5, postText);
+            this.database.sendPreparedStatement(preparedStatement, false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
