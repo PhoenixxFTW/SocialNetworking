@@ -3,7 +3,7 @@ package com.phoenixx.client.utils;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.client.controllers.LoginController;
-import com.phoenixx.client.controllers.SignupController;
+import com.phoenixx.client.controllers.SignUpController;
 import com.phoenixx.client.network.ClientNetworkMain;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
@@ -18,7 +18,7 @@ public class ClientNetworkListener extends Listener {
             SignUpResponse response = (SignUpResponse)object;
             System.out.println(response.getMessage());
 
-            SignupController.getInstance().setRegistered(response.isRegisterSuccessFull());
+            SignUpController.getInstance().setRegistered(response.isRegisterSuccessFull());
         }
 
         if(object instanceof SignInResponse)

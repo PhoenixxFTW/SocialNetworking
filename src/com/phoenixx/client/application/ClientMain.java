@@ -3,10 +3,10 @@ package com.phoenixx.client.application;
 import com.phoenixx.client.network.ClientNetworkMain;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 public class ClientMain extends Application
 {
@@ -25,7 +25,7 @@ public class ClientMain extends Application
 		try {
 			parentWindow = primaryStage;
 
-			Parent root = FXMLLoader.load(getClass().getResource("/com/phoenixx/client/fxml/LoginScreen.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginScreen.fxml"));
 
 			Scene scene = new Scene(root,1187,664);
 			primaryStage.setScene(scene);

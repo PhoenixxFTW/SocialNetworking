@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.phoenixx.client.application.ClientMain;
-import com.phoenixx.client.dBConnection.DBHandler;
 import com.phoenixx.packets.objects.SignUpObject;
 import com.phoenixx.packets.requests.SignUpRequest;
 import javafx.application.Platform;
@@ -24,12 +23,10 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-public class SignupController implements Initializable
+public class SignUpController implements Initializable
 {
 
     //TODO setup password encryption
@@ -67,13 +64,9 @@ public class SignupController implements Initializable
     @FXML
     private JFXButton registerButton;
 
-    private Connection connection;
-    private DBHandler handler;
-    private PreparedStatement pst;
+    private static SignUpController instance;
 
-    private static SignupController instance;
-
-    public static SignupController getInstance() {
+    public static SignUpController getInstance() {
         return instance;
     }
 
@@ -106,8 +99,6 @@ public class SignupController implements Initializable
         username.setStyle("-fx-text-inner-color: #a0a2ab;");
         password.setStyle("-fx-text-inner-color: #a0a2ab;");
         verified_password.setStyle("-fx-text-inner-color: #a0a2ab;");
-
-	    handler = new DBHandler(); 
 	}
 
 	@FXML
@@ -215,7 +206,7 @@ public class SignupController implements Initializable
 
     public void backButtonClickAction(MouseEvent mouseEvent)
     {
-        loadUI("/com/phoenixx/client/fxml/LoginScreen.fxml");
+        loadUI("/fxml/LoginScreen.fxml");
     }
 
     private void loadUI(String ui)

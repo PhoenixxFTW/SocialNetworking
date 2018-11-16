@@ -22,7 +22,7 @@
          <children>
             <ImageView fx:id="profilePic" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" translateX="90.0" translateY="50.0">
                <image>
-                  <Image url="@Warning_Icon.png" />
+                  <Image url="@../icons/Warning_Icon.png" />
                </image>
                <VBox.margin>
                   <Insets />
@@ -33,11 +33,11 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button fx:id="homeButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="283.0" stylesheets="@HomeScreenStyle.css" text="Home" translateY="120.0">
+            <Button fx:id="homeButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="283.0" stylesheets="@../css/HomeScreenStyle.css" text="Home" translateY="120.0">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8_Home_32px.png" />
+                        <Image url="@../icons/HomeIcon_32x.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -48,11 +48,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="friendsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="291.0" stylesheets="@HomeScreenStyle.css" text="Friends" translateY="120.0">
+            <Button fx:id="friendsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="291.0" stylesheets="@../css/HomeScreenStyle.css" text="Friends" translateY="120.0">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8_Person_32px.png" />
+                        <Image url="@../icons/PersonIcon_32x.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -60,11 +60,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="settingsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="287.0" stylesheets="@HomeScreenStyle.css" text="Settings" translateY="120.0">
+            <Button fx:id="settingsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="287.0" stylesheets="@../css/HomeScreenStyle.css" text="Settings" translateY="120.0">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8_Slider__32px.png" />
+                        <Image url="@../icons/SettingsIcon_32x.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -72,11 +72,11 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="signOutButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="279.0" stylesheets="@HomeScreenStyle.css" text="Sign Out" translateY="120.0">
+            <Button fx:id="signOutButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="279.0" stylesheets="@../css/HomeScreenStyle.css" text="Sign Out" translateY="120.0">
                <graphic>
                   <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons8_Sign_Out_32px.png" />
+                        <Image url="@../icons/SignOutIcon_32x.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -86,7 +86,7 @@
             </Button>
          </children>
       </VBox>
-      <ScrollPane fx:id="postsPane" layoutX="278.0" layoutY="247.0" prefHeight="421.0" prefWidth="902.0" stylesheets="@HomeScreenStyle.css">
+      <ScrollPane fx:id="postsPane" layoutX="278.0" layoutY="247.0" prefHeight="421.0" prefWidth="902.0" stylesheets="@../css/HomeScreenStyle.css">
          <content>
             <VBox fx:id="postListPane" prefHeight="419.0" prefWidth="899.0" spacing="5.0" style="-fx-background-color: #2D3447;">
                <padding>

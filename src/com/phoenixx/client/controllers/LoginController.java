@@ -5,7 +5,6 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.phoenixx.client.application.ClientMain;
-import com.phoenixx.client.dBConnection.DBHandler;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.requests.SignInRequest;
 import javafx.animation.TranslateTransition;
@@ -23,7 +22,6 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -66,9 +64,6 @@ public class LoginController implements Initializable {
 
     private boolean canLogin = false;
 
-    private DBHandler handler;
-	private Connection connection;
-	private java.sql.PreparedStatement pst;
 	private static LoginController instance;
 
 	public static String usernameGiven1;
@@ -87,8 +82,6 @@ public class LoginController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		username.setStyle("-fx-text-inner-color: #a0a2ab;");
 		password.setStyle("-fx-text-inner-color: #a0a2ab;");
-		
-		handler = new DBHandler();
 	}
 
 	@FXML
@@ -124,7 +117,7 @@ public class LoginController implements Initializable {
         {
             showNotification();
         } else {
-            loadUI("/com/phoenixx/client/fxml/SignupScreen.fxml");
+            loadUI("/fxml/SignupScreen.fxml");
         }
 	}
 
@@ -160,7 +153,7 @@ public class LoginController implements Initializable {
 
                 Parent root = null;
                 try{
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/phoenixx/client/fxml/HomeScreen.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
                     root = loader.load();
 
                     HomeScreenController homeScreenController = loader.getController();

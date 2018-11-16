@@ -101,7 +101,7 @@ public class HomeScreenController implements Initializable
                 try {
 
                     final int j = i;
-                    nodes[i] = FXMLLoader.load(getClass().getResource("/com/phoenixx/client/fxml/Item.fxml"));
+                    nodes[i] = FXMLLoader.load(getClass().getResource("/fxml/Item.fxml"));
 
                     //give the items some effect
 
@@ -133,7 +133,7 @@ public class HomeScreenController implements Initializable
             Stage login = new Stage();
             Parent root;
             try {
-                root = FXMLLoader.load(getClass().getResource("/com/phoenixx/client/fxml/LoginScreen.fxml"));
+                root = FXMLLoader.load(getClass().getResource("/fxml/LoginScreen.fxml"));
 
                 Scene scene = new Scene(root);
                 login.setScene(scene);
