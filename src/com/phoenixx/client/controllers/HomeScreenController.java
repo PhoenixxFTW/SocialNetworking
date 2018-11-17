@@ -3,6 +3,7 @@ package com.phoenixx.client.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,7 +60,7 @@ public class HomeScreenController implements Initializable
     private VBox postListPane = null;
 
     @FXML
-    public JFXButton createPostButton;
+    private JFXButton createPostButton;
 
     private ClientUserObject clientUserObject;
 
@@ -88,17 +89,10 @@ public class HomeScreenController implements Initializable
 
         //TODO Get image from ClientObject / Database
         setProfilePic("https://i.imgur.com/rLTnjje.png");
-
-        try{
-        } catch(Exception ex) {
-            System.out.println("There was an error while setting the name text! setUUID method in HomeScreenController");
-            ex.printStackTrace();
-        }
     }
 
     public void handleMenuButtonClick(ActionEvent actionEvent)
     {
-        //TODO Setup posts instead of "items"
         if (actionEvent.getSource() == homeButton) {
 
             System.out.println("Home button pressed!!!");
@@ -134,9 +128,7 @@ public class HomeScreenController implements Initializable
     public void setupPosts(ArrayList<PostDataObject> postDataObjects)
     {
         try {
-            System.out.println("This is a BEFORE POST PANES");
             postsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-            System.out.println("This is a after POST PANES");
             Node[] nodes = new Node[postDataObjects.size()];
 
             for (int i = 0; i < postDataObjects.size(); i++) {
@@ -144,42 +136,28 @@ public class HomeScreenController implements Initializable
 
                     final int j = i;
 
-                    try {
-                        //FIXME This does not work! Only displays the first D:
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Post.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Post.fxml"));
 
-                        nodes[i] = loader.load();
+                    nodes[i] = loader.load();
 
-                        PostDataObject postDataObject = postDataObjects.get(i);
+                    PostDataObject postDataObject = postDataObjects.get(i);
 
-                        PostController postController = loader.getController();
-                        if(postController == null)
-                        {
-                            System.out.println("CONTROLLER IS NULL");
-                        }
-                        postController.setData(postDataObject);
+                    PostController postController = (PostController) loader.getController();
 
-                        System.out.println("===============================");
-                        System.out.println("Post ID: " + postDataObject.getPostID());
-                        System.out.println("Owner UUID: " + postDataObject.getOwnerUUID());
-                        System.out.println("Owner UUID: " + postDataObject.getOwnerName());
-                        System.out.println("Date Created: " + postDataObject.getDateCreated());
-                        System.out.println("Tags: " + postDataObject.getTags());
-                        System.out.println("Post Title: " + postDataObject.getPostTile());
-                        System.out.println("Post text: " + postDataObject.getPostText());
-
-                        nodes[i].setOnMouseEntered(event -> {
-                            nodes[j].setStyle("-fx-background-color : #0A0E3F");
-                        });
-                        nodes[i].setOnMouseExited(event -> {
-                            nodes[j].setStyle("-fx-background-color : #02030A");
-                        });
-
-                        postListPane.getChildren().setAll(nodes[i]);
-                    } catch (NullPointerException ex) {
-                        ex.printStackTrace();
+                    if(postController == null)
+                    {
+                        System.out.println("CONTROLLER IS NULL");
                     }
 
+                    postController.setData(postDataObject);
+
+                    nodes[i].setOnMouseEntered(event -> {
+                        nodes[j].setStyle("-fx-background-color : #0A0E3F");
+                    });
+                    nodes[i].setOnMouseExited(event -> {
+                        nodes[j].setStyle("-fx-background-color : #02030A");
+                    });
+                    postListPane.getChildren().add(nodes[i]);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -217,6 +195,35 @@ public class HomeScreenController implements Initializable
 
         // store the rounded image in the imageView.
         profilePic.setImage(image);
+    }
+
+    public void loadPost(PostDataObject postDataObject, ClientUserObject postOwnerObject) {
+        Platform.runLater(()->{
+
+            Parent root = null;
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ReadPostScreen.fxml"));
+                root = loader.load();
+
+                ReadPostScreen readPostScreen = loader.getController();
+                if(postOwnerObject != null)
+                {
+                    readPostScreen.setClientUser(postOwnerObject);
+                } else {
+                    System.out.println("POST OWNER WAS NULL");
+                }
+
+                readPostScreen.setPostData(postDataObject);
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            try{
+                anchorPane.getChildren().setAll(root);
+            }catch (NullPointerException ex){
+                ex.printStackTrace();
+            }
+        });
     }
 
     private void loadUI(String ui)

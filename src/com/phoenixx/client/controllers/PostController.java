@@ -1,9 +1,12 @@
 package com.phoenixx.client.controllers;
 
+import com.phoenixx.client.application.ClientMain;
 import com.phoenixx.packets.objects.PostDataObject;
+import com.phoenixx.packets.requests.PostDataRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -22,6 +25,9 @@ public class PostController implements Initializable
 
     @FXML
     private Label tags_text;
+
+    @FXML
+    private Tooltip tagsToolTip;
 
     private PostDataObject postDataObject;
 
@@ -46,6 +52,7 @@ public class PostController implements Initializable
         owner_text.setText("By: "+postDataObject.getOwnerName());
         date_text.setText("Created on: "+postDataObject.getDateCreated());
         tags_text.setText("Tag(s): "+postDataObject.getTags());
+        tagsToolTip.setText("Tag(s): "+postDataObject.getTags());
     }
 
     public void onPostClicked(MouseEvent mouseEvent)
@@ -58,5 +65,11 @@ public class PostController implements Initializable
         System.out.println("Tags: " + postDataObject.getTags());
         System.out.println("Post Title: " + postDataObject.getPostTile());
         System.out.println("Post text: " + postDataObject.getPostText());
+
+        PostDataRequest request = new PostDataRequest();
+        request.setPostID(this.postDataObject.getPostID());
+        request.setUserUUID(this.postDataObject.getOwnerUUID());
+
+        ClientMain.getNetworkManager().sendMessageToServer(request);
     }
 }

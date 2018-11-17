@@ -4,8 +4,10 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.SignUpObject;
+import com.phoenixx.packets.requests.PostDataRequest;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
+import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
 import com.phoenixx.server.ServerNetworkMain;
@@ -73,22 +75,26 @@ public class ServerNetworkListener extends Listener
 
             ClientUserObject clientUserObject = ServerNetworkMain.getDatabaseManager().getUserData(usernameGiven, passwordGiven);
 
-            ServerNetworkMain.getUserDataManager();
-
             if(clientUserObject != null && doesUserExist)
             {
                 response.setClientUserObject(clientUserObject);
                 response.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
 
-                //PostDataResponse postDataResponse = new PostDataResponse();
-
-                //postDataResponse.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
-                //ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
-
             } else if (!doesUserExist) {
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
             }
+        }
+
+        if(object instanceof PostDataRequest)
+        {
+            PostDataRequest request = (PostDataRequest)object;
+
+            PostDataResponse postDataResponse = new PostDataResponse();
+
+            postDataResponse.setPostDataObject(ServerNetworkMain.getDatabaseManager().getPostDataFromID(request.getPostID()));
+            postDataResponse.setPostOwnerObject(ServerNetworkMain.getDatabaseManager().getUserDataFromUUID(request.getUserUUID()));
+            ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
         }
     }
 

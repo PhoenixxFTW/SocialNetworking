@@ -68,6 +68,45 @@ public class DatabaseManager
         return null;
     }
 
+    public ClientUserObject getUserDataFromUUID(String givenUUID)
+    {
+        Connection connection = database.getConnection();
+        ResultSet results;
+        PreparedStatement preparedStatement;
+
+        try {
+            if(!connection.isClosed() && connection !=null)
+            {
+                String selectSQL = "SELECT * from userdata where uuid = ?";
+
+                try {
+                    preparedStatement = connection.prepareStatement(selectSQL);
+                    preparedStatement.setString(1, givenUUID);
+
+                    results = preparedStatement.executeQuery();
+
+                    while(results.next())
+                    {
+                        String uuid = results.getString(1);
+                        String studentNumber = results.getString(2);
+                        String usernameFromDb = results.getString(3);
+                        String fullNameFromDb = results.getString(6);
+
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
+                    }
+
+                } catch (SQLException e) {
+                    System.out.println("FAILED TO CHECK IF USER EXISTS");
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     /**
      * Checks if a user exists, also checks the users student number just so there are not more then 2
      * @param username users username given
@@ -185,19 +224,10 @@ public class DatabaseManager
                         Timestamp dateCreated = results.getTimestamp(4);
                         String tags = results.getString(5);
                         String postTitle = results.getString(6);
-                        //String postText = results.getString(6);
+                        //String postText = results.getString(7);
                         String postText = "This is the fake text";
 
-                        System.out.println("===============================");
-                        System.out.println("Post ID: " + postID);
-                        System.out.println("Owner UUID: " + ownerUUID);
-                        System.out.println("Owner Name: " + ownerName);
-                        System.out.println("Date Created: " + dateCreated);
-                        System.out.println("Tags: " + tags);
-                        System.out.println("Post Title: " + postTitle);
-                        System.out.println("Post text: " + postText);
-
-                        PostDataObject postDataObject = new PostDataObject(postID, ownerUUID, ownerName, dateCreated.toLocalDateTime().toString(), tags, postTitle, postText);
+                        PostDataObject postDataObject = new PostDataObject(postID, ownerUUID, ownerName, dateCreated.toString().substring(0,10), tags, postTitle, postText);
                         latestPosts.add(postDataObject);
                     }
 

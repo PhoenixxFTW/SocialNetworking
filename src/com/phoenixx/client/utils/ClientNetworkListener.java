@@ -29,17 +29,14 @@ public class ClientNetworkListener extends Listener {
             LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject(), response.getPostDataObjects());
         }
 
-        //TODO Change this to only 1 post, we'll call this once the post is clicked on to get ALL its data
         if(object instanceof PostDataResponse)
         {
             PostDataResponse response = (PostDataResponse)object;
 
-            if(response != null && response.getPostDataObjects() != null)
+            if(response != null && response.getPostDataObject() != null)
             {
-                System.out.println("Printing all responses: ");
-                System.out.println(response.getPostDataObjects().toArray().toString());
                 try{
-                    HomeScreenController.getInstance().setupPosts(response.getPostDataObjects());
+                    HomeScreenController.getInstance().loadPost(response.getPostDataObject(), response.getPostOwnerObject());
                 } catch (NullPointerException ex) {
                     ex.printStackTrace();
                 }
