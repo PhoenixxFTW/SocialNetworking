@@ -78,7 +78,14 @@ public class ServerNetworkListener extends Listener
             if(clientUserObject != null && doesUserExist)
             {
                 response.setClientUserObject(clientUserObject);
+                response.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
+
+                //PostDataResponse postDataResponse = new PostDataResponse();
+
+                //postDataResponse.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
+                //ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+
             } else if (!doesUserExist) {
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
             }

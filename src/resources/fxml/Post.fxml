@@ -4,14 +4,14 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<HBox fx:id="post" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="90.0" prefWidth="865.0" spacing="80.0" style="-fx-background-color: #02030A; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="post" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onPostClicked" prefHeight="90.0" prefWidth="865.0" spacing="80.0" style="-fx-background-color: #02030A; -fx-background-radius: 5; -fx-background-insets: 0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.PostController">
    <effect>
       <DropShadow blurType="GAUSSIAN" height="5.0" radius="2.0" width="5.0" />
    </effect>
    <children>
       <HBox prefHeight="90.0" prefWidth="255.0" translateX="355.0">
          <children>
-            <Label fx:id="titleText" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="261.0" text="Post Title" textFill="WHITE" translateY="10.0">
+            <Label fx:id="title_text" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="261.0" text="Post Title" textFill="WHITE" translateY="10.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -20,7 +20,7 @@
       </HBox>
       <HBox prefHeight="90.0" prefWidth="255.0" translateX="-225.0">
          <children>
-            <Label fx:id="ownerText" prefHeight="35.0" prefWidth="261.0" text="By: ERROR" textFill="WHITE" translateY="25.0">
+            <Label fx:id="owner_text" prefHeight="35.0" prefWidth="261.0" text="By: ERROR" textFill="WHITE" translateY="25.0">
                <font>
                   <Font size="15.0" />
                </font>
@@ -29,7 +29,7 @@
       </HBox>
       <HBox prefHeight="90.0" prefWidth="255.0" translateX="220.0">
          <children>
-            <Label fx:id="dateText" alignment="CENTER" prefHeight="35.0" prefWidth="177.0" text="Created on: 2018-11-16" textFill="WHITE" translateY="25.0">
+            <Label fx:id="date_text" alignment="CENTER" prefHeight="35.0" prefWidth="177.0" text="Created on: 2018-11-16" textFill="WHITE" translateY="25.0">
                <font>
                   <Font size="13.0" />
                </font>
@@ -38,7 +38,7 @@
       </HBox>
       <HBox prefHeight="90.0" prefWidth="255.0" translateX="-350.0" translateY="15.0">
          <children>
-            <Label fx:id="tagsTest" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="261.0" text="Tags: Com sci, code, help" textFill="#b9b9b9" translateY="50.0">
+            <Label fx:id="tags_text" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="261.0" text="Tags: Com sci, code, help" textFill="#b9b9b9" translateY="50.0">
                <font>
                   <Font size="13.0" />
                </font>

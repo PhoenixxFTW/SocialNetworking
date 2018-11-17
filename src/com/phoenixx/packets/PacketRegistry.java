@@ -3,9 +3,11 @@ package com.phoenixx.packets;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.objects.SignUpObject;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
+import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
 
@@ -36,6 +38,7 @@ public class PacketRegistry extends Listener
         /** Server packets */
         kryo.register(SignUpResponse.class);
         kryo.register(SignInResponse.class);
+        kryo.register(PostDataResponse.class);
         //kryo.register(Packet_Handshake_Response.class);
         //kryo.register(Packet_Message_Response.class);
         //kryo.register(Packet_Notification_Response.class);
@@ -43,6 +46,7 @@ public class PacketRegistry extends Listener
         /** Objects */
         kryo.register(SignUpObject.class);
         kryo.register(ClientUserObject.class);
+        kryo.register(PostDataObject.class);
         //kryo.register(ConnectionObject.class);
         //kryo.register(NotificationObject.class);
     }

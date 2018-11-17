@@ -4,6 +4,7 @@ import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseManager
 {
@@ -18,7 +19,7 @@ public class DatabaseManager
     public void createDefaultTables()
     {
         //TODO Add dateJoined
-        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, PRIMARY KEY (uuid));";
+        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, full_name TEXT, PRIMARY KEY (uuid));";
         String CREATE_POSTS_TABLE = "CREATE TABLE IF NOT EXISTS PostData (post_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, owner_uuid varchar(50), date_created TIMESTAMP, tags TEXT, post_title TEXT, post_text MEDIUMTEXT);";
         String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
 
@@ -158,7 +159,61 @@ public class DatabaseManager
         }
     }
 
-    public PostDataObject getPostData(int postID)
+    public ArrayList getLatestPostData()
+    {
+        int lastAmountOfData = 10;
+        ArrayList<PostDataObject> latestPosts = new ArrayList();
+        Connection connection = database.getConnection();
+        ResultSet results;
+        PreparedStatement preparedStatement;
+
+        try {
+            if(!connection.isClosed() && connection !=null)
+            {
+                String selectSQL = "SELECT * from postdata order by post_id desc limit " + lastAmountOfData;
+
+                try {
+                    preparedStatement = connection.prepareStatement(selectSQL);
+
+                    results = preparedStatement.executeQuery();
+
+                    while(results.next())
+                    {
+                        int postID = results.getInt(1);
+                        String ownerUUID = results.getString(2);
+                        String ownerName = results.getString(3);
+                        Timestamp dateCreated = results.getTimestamp(4);
+                        String tags = results.getString(5);
+                        String postTitle = results.getString(6);
+                        //String postText = results.getString(6);
+                        String postText = "This is the fake text";
+
+                        System.out.println("===============================");
+                        System.out.println("Post ID: " + postID);
+                        System.out.println("Owner UUID: " + ownerUUID);
+                        System.out.println("Owner Name: " + ownerName);
+                        System.out.println("Date Created: " + dateCreated);
+                        System.out.println("Tags: " + tags);
+                        System.out.println("Post Title: " + postTitle);
+                        System.out.println("Post text: " + postText);
+
+                        PostDataObject postDataObject = new PostDataObject(postID, ownerUUID, ownerName, dateCreated.toLocalDateTime().toString(), tags, postTitle, postText);
+                        latestPosts.add(postDataObject);
+                    }
+
+                    return latestPosts;
+                } catch (SQLException e) {
+                    System.out.println("FAILED TO GET POST DATA");
+                    e.printStackTrace();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public PostDataObject getPostDataFromID(int postID)
     {
         Connection connection = database.getConnection();
         ResultSet results;
@@ -178,12 +233,13 @@ public class DatabaseManager
                     while(results.next())
                     {
                         String ownerUUID = results.getString(2);
-                        Timestamp dateCreated = results.getTimestamp(3);
-                        String tags = results.getString(4);
-                        String postTitle = results.getString(5);
-                        String postText = results.getString(6);
+                        String ownerName = results.getString(3);
+                        Timestamp dateCreated = results.getTimestamp(4);
+                        String tags = results.getString(5);
+                        String postTitle = results.getString(6);
+                        String postText = results.getString(7);
 
-                        return new PostDataObject(postID, ownerUUID, dateCreated.toLocalDateTime().toString(), tags, postTitle, postText);
+                        return new PostDataObject(postID, ownerUUID, ownerName, dateCreated.toLocalDateTime().toString(), tags, postTitle, postText);
                     }
 
                 } catch (SQLException e) {
@@ -200,22 +256,25 @@ public class DatabaseManager
     /**
      * Creates a new "forum post" to be displayed on the HomeScreen
      * @param ownerUUID UUID of the user who made the post
+     * @param ownerName Name of the user who made the post
      * @param tags Tags the user set to the post, so we can filter by them later on
      * @param postTitle Name of the post
      * @param postText Actual text from the post
      */
-    public void createNewPost(String ownerUUID, String tags, String postTitle, String postText)
+    public void createNewPost(String ownerUUID, String ownerName, String tags, String postTitle, String postText)
     {
-        String createNewUserStatement = "INSERT INTO postdata(owner_uuid,date_created,tags,post_title,post_text) VALUES (?,?,?,?,?)";
+        String createNewUserStatement = "INSERT INTO postdata(owner_uuid,owner_name,date_created,tags,post_title,post_text) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(createNewUserStatement);
 
             preparedStatement.setString(1, ownerUUID);
-            preparedStatement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-            preparedStatement.setString(3, tags);
-            preparedStatement.setString(4, postTitle);
-            preparedStatement.setString(5, postText);
+            preparedStatement.setString(2, ownerName);
+            preparedStatement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(4, tags);
+            preparedStatement.setString(5, postTitle);
+            preparedStatement.setString(6, postText);
+
             this.database.sendPreparedStatement(preparedStatement, false);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class ServerNetworkMain
 {
-    public static Server server = new Server(32768, 8192);
+    public static Server server = new Server(327684, 819234);
     private static Kryo kryo;
 
     private static final int NETWORK_TCP_PORT = 2273;
@@ -51,6 +51,15 @@ public class ServerNetworkMain
 
         databaseManager = new DatabaseManager(mySqlDatabase);
         databaseManager.createDefaultTables();
+
+        /*databaseManager.createNewPost("testUUID1", "Bryn", "Math, cooking, other shit", "What up hoes", "fake text");
+        databaseManager.createNewPost("testUUID2", "Jon", "English", "How do I do this?", "fake text");
+        databaseManager.createNewPost("testUUID3", "Jake", "Tech design", "Where can I get this", "fake text");
+        databaseManager.createNewPost("testUUID4", "Alex", "Robotics", "Who wrote this", "fake text");
+        databaseManager.createNewPost("testUUID5", "Brad", "Law, foo", "Fucking help me", "fake text");
+        databaseManager.createNewPost("testUUID6", "Jay", "Civics", "This wont work", "fake text");
+        databaseManager.createNewPost("testUUID7", "Maalik", "Geography", "Where Im I", "fake text");
+        databaseManager.createNewPost("testUUID8", "Reasad", "Computers", "What is this", "fake text");*/
 
 		databaseQueue = new DatabaseThread();
 		databaseQueue.start();

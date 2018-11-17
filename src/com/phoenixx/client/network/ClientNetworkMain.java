@@ -1,15 +1,15 @@
 package com.phoenixx.client.network;
 
-import com.phoenixx.packets.PacketRegistry;
-import com.phoenixx.client.utils.ClientNetworkListener;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
+import com.phoenixx.client.utils.ClientNetworkListener;
+import com.phoenixx.packets.PacketRegistry;
 
 import java.io.IOException;
 
 public class ClientNetworkMain
 {
-    public static Client client = new Client(32768, 8192);
+    public static Client client = new Client(327684, 819234);
     private static Kryo kryo;
 
     public static boolean shouldConnect = true;

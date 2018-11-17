@@ -4,6 +4,7 @@ public class PostDataObject
 {
     private int postID;
     private String ownerUUID;
+    private String ownerName;
     private String dateCreated;
     private String tags;
     private String postText;
@@ -14,10 +15,11 @@ public class PostDataObject
 
     }
 
-    public PostDataObject(int postID, String ownerUUID, String dateCreated, String tags, String postTile, String postText)
+    public PostDataObject(int postID, String ownerUUID, String ownerName, String dateCreated, String tags, String postTile, String postText)
     {
         this.postID = postID;
         this.ownerUUID = ownerUUID;
+        this.ownerName = ownerName;
         this.dateCreated = dateCreated;
         this.tags = tags;
         this.postTile = postTile;
@@ -30,6 +32,10 @@ public class PostDataObject
 
     public String getOwnerUUID() {
         return ownerUUID;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
     }
 
     public String getDateCreated() {

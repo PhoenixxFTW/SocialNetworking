@@ -2,9 +2,11 @@ package com.phoenixx.client.utils;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.phoenixx.client.controllers.HomeScreenController;
 import com.phoenixx.client.controllers.LoginController;
 import com.phoenixx.client.controllers.SignUpController;
 import com.phoenixx.client.network.ClientNetworkMain;
+import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
 
@@ -24,7 +26,24 @@ public class ClientNetworkListener extends Listener {
         if(object instanceof SignInResponse)
         {
             SignInResponse response = (SignInResponse)object;
-            LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject());
+            LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject(), response.getPostDataObjects());
+        }
+
+        //TODO Change this to only 1 post, we'll call this once the post is clicked on to get ALL its data
+        if(object instanceof PostDataResponse)
+        {
+            PostDataResponse response = (PostDataResponse)object;
+
+            if(response != null && response.getPostDataObjects() != null)
+            {
+                System.out.println("Printing all responses: ");
+                System.out.println(response.getPostDataObjects().toArray().toString());
+                try{
+                    HomeScreenController.getInstance().setupPosts(response.getPostDataObjects());
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
     }
 

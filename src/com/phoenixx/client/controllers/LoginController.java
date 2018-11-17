@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.phoenixx.client.application.ClientMain;
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.requests.SignInRequest;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
@@ -22,6 +23,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -149,7 +151,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void setCanLogin(boolean canLogin1, ClientUserObject clientUserObject) {
+    public void setCanLogin(boolean canLogin1, ClientUserObject clientUserObject, ArrayList<PostDataObject> postDataObjects) {
 	    if(canLogin1)
 	    {
             Platform.runLater(()->{
@@ -162,6 +164,7 @@ public class LoginController implements Initializable {
 
                     HomeScreenController homeScreenController = loader.getController();
                     homeScreenController.setClientUser(clientUserObject);
+                    homeScreenController.setupPosts(postDataObjects);
 
                 } catch (IOException e){
                     e.printStackTrace();

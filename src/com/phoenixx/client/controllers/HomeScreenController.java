@@ -2,6 +2,7 @@ package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.objects.PostDataObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomeScreenController implements Initializable
@@ -87,8 +89,6 @@ public class HomeScreenController implements Initializable
         //TODO Get image from ClientObject / Database
         setProfilePic("https://i.imgur.com/rLTnjje.png");
 
-        setupPosts();
-
         try{
         } catch(Exception ex) {
             System.out.println("There was an error while setting the name text! setUUID method in HomeScreenController");
@@ -131,28 +131,62 @@ public class HomeScreenController implements Initializable
         }
     }
 
-    public void setupPosts()
+    public void setupPosts(ArrayList<PostDataObject> postDataObjects)
     {
-        postsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        Node[] nodes = new Node[10];
-        for (int i = 0; i < nodes.length; i++) {
-            try {
+        try {
+            System.out.println("This is a BEFORE POST PANES");
+            postsPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+            System.out.println("This is a after POST PANES");
+            Node[] nodes = new Node[postDataObjects.size()];
 
-                final int j = i;
-                nodes[i] = FXMLLoader.load(getClass().getResource("/fxml/Post.fxml"));
+            for (int i = 0; i < postDataObjects.size(); i++) {
+                try {
 
-                //give the items some effect
+                    final int j = i;
 
-                nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #0A0E3F");
-                });
-                nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #02030A");
-                });
-                postListPane.getChildren().add(nodes[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
+                    try {
+                        //FIXME This does not work! Only displays the first D:
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Post.fxml"));
+
+                        nodes[i] = loader.load();
+
+                        PostDataObject postDataObject = postDataObjects.get(i);
+
+                        PostController postController = loader.getController();
+                        if(postController == null)
+                        {
+                            System.out.println("CONTROLLER IS NULL");
+                        }
+                        postController.setData(postDataObject);
+
+                        System.out.println("===============================");
+                        System.out.println("Post ID: " + postDataObject.getPostID());
+                        System.out.println("Owner UUID: " + postDataObject.getOwnerUUID());
+                        System.out.println("Owner UUID: " + postDataObject.getOwnerName());
+                        System.out.println("Date Created: " + postDataObject.getDateCreated());
+                        System.out.println("Tags: " + postDataObject.getTags());
+                        System.out.println("Post Title: " + postDataObject.getPostTile());
+                        System.out.println("Post text: " + postDataObject.getPostText());
+
+                        nodes[i].setOnMouseEntered(event -> {
+                            nodes[j].setStyle("-fx-background-color : #0A0E3F");
+                        });
+                        nodes[i].setOnMouseExited(event -> {
+                            nodes[j].setStyle("-fx-background-color : #02030A");
+                        });
+
+                        postListPane.getChildren().setAll(nodes[i]);
+                    } catch (NullPointerException ex) {
+                        ex.printStackTrace();
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
         }
     }
 
