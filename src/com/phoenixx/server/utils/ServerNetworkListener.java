@@ -3,7 +3,9 @@ package com.phoenixx.server.utils;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
+import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.objects.SignUpObject;
+import com.phoenixx.packets.requests.CreatePostRequest;
 import com.phoenixx.packets.requests.PostDataRequest;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
@@ -95,6 +97,14 @@ public class ServerNetworkListener extends Listener
             postDataResponse.setPostDataObject(ServerNetworkMain.getDatabaseManager().getPostDataFromID(request.getPostID()));
             postDataResponse.setPostOwnerObject(ServerNetworkMain.getDatabaseManager().getUserDataFromUUID(request.getUserUUID()));
             ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+        }
+
+        if(object instanceof CreatePostRequest)
+        {
+            CreatePostRequest createPostRequest = (CreatePostRequest) object;
+            PostDataObject postDataObject = createPostRequest.getPostDataObject();
+
+            ServerNetworkMain.getDatabaseManager().createNewPost(createPostRequest.getOwnerUUID(), createPostRequest.getOwnerName(), postDataObject.getTags(), postDataObject.getPostTile(), postDataObject.getPostText());
         }
     }
 

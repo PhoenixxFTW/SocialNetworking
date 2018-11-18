@@ -214,6 +214,7 @@ public class HomeScreenController implements Initializable
                 }
 
                 readPostScreen.setPostData(postDataObject);
+                readPostScreen.setHomeScreenAnchorPane(anchorPane);
 
             } catch (IOException e){
                 e.printStackTrace();
@@ -224,6 +225,26 @@ public class HomeScreenController implements Initializable
                 ex.printStackTrace();
             }
         });
+    }
+
+    public void handleCreatePostButton(ActionEvent actionEvent)
+    {
+        Parent root = null;
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CreatePostScreen.fxml"));
+            root = loader.load();
+
+            CreatePostController createPostController = loader.getController();
+            createPostController.setClientUser(clientUserObject);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 
     private void loadUI(String ui)

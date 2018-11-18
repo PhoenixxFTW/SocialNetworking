@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.objects.SignUpObject;
+import com.phoenixx.packets.requests.CreatePostRequest;
 import com.phoenixx.packets.requests.PostDataRequest;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
@@ -35,6 +36,7 @@ public class PacketRegistry extends Listener
         kryo.register(SignInRequest.class);
         kryo.register(SignUpRequest.class);
         kryo.register(PostDataRequest.class);
+        kryo.register(CreatePostRequest.class);
 
         /** Server packets */
         kryo.register(SignUpResponse.class);

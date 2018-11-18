@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1196.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.CreatePostController">
+   <children>
+      <Label layoutX="468.0" layoutY="21.0" text="Phoenix" textFill="#2196f3">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="591.0" layoutY="21.0" text=" Studios" textFill="#a0a2ab">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <HBox layoutY="72.0" prefHeight="51.0" prefWidth="1196.0" style="-fx-background-color: #161C28;">
+         <children>
+            <TextField fx:id="titleText" alignment="CENTER" prefHeight="48.0" prefWidth="1196.0" promptText="Post title" style="-fx-background-color: #161C28;">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </TextField>
+         </children>
+      </HBox>
+      <ScrollPane fx:id="postScroll_pane" hbarPolicy="NEVER" layoutY="195.0" prefHeight="473.0" prefWidth="1196.0" style="-fx-background-color: transparent;;" stylesheets="@../css/HomeScreenStyle.css">
+         <content>
+            <VBox fx:id="postListPane" prefHeight="471.0" prefWidth="1194.0" spacing="5.0" style="-fx-background-color: #2D3447;">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <TextArea fx:id="postText" prefHeight="469.0" prefWidth="1184.0" style="-fx-background-color: transparent;" wrapText="true" />
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <JFXButton fx:id="backButton" layoutX="19.0" layoutY="8.0" onMouseClicked="#handleBackButtonClick" prefHeight="51.0" prefWidth="44.0">
+         <graphic>
+            <ImageView fx:id="backButton">
+               <image>
+                  <Image url="@../icons/BackIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <HBox layoutY="141.0" prefHeight="51.0" prefWidth="1196.0" style="-fx-background-color: #161C28;">
+         <children>
+            <TextField fx:id="tagsText" alignment="CENTER" prefHeight="51.0" prefWidth="846.0" promptText="Tag(s):" style="-fx-background-color: #161C28;" translateX="160.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </TextField>
+            <JFXButton fx:id="submitButton" onAction="#handleSubmitButtonClick" prefHeight="42.0" prefWidth="146.0" style="-fx-background-color: #2D3447;" text="Submit" textFill="WHITE" translateX="200.0" translateY="4.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </HBox>
+      <Label fx:id="missingEntryText" alignment="CENTER" layoutX="989.0" layoutY="36.0" prefHeight="21.0" prefWidth="177.0" text="Missing entry!" textFill="RED" translateX="45.0" translateY="85.0" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

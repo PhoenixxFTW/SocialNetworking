@@ -1,20 +1,31 @@
 package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.phoenixx.client.utils.ClientData;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ReadPostScreen implements Initializable
 {
+    @FXML
+    private AnchorPane anchorPane;
+
+    @FXML
+    private AnchorPane homeScreenAnchorPane;
+
     @FXML
     private ScrollPane postScroll_pane;
 
@@ -51,6 +62,10 @@ public class ReadPostScreen implements Initializable
 
     }
 
+    public void setHomeScreenAnchorPane(AnchorPane homeScreenAnchorPane) {
+        this.homeScreenAnchorPane = homeScreenAnchorPane;
+    }
+
     public void setClientUser(ClientUserObject clientUser)
     {
         this.clientUserObject = clientUser;
@@ -77,6 +92,26 @@ public class ReadPostScreen implements Initializable
     {
         //TODO Get author data and then load a profile screen
         System.out.println("Author buttons clicked!");
+    }
 
+    public void handleBackButtonClick(MouseEvent mouseEvent)
+    {
+        Parent root = null;
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
+            root = loader.load();
+
+            HomeScreenController homeScreenController = loader.getController();
+            homeScreenController.setClientUser(clientUserObject);
+            homeScreenController.setupPosts(ClientData.loadedPosts);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 }

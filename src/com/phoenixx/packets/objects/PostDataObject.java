@@ -26,6 +26,34 @@ public class PostDataObject
         this.postText = postText;
     }
 
+    public void setPostID(int postID) {
+        this.postID = postID;
+    }
+
+    public void setOwnerUUID(String ownerUUID) {
+        this.ownerUUID = ownerUUID;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setPostTile(String postTile) {
+        this.postTile = postTile;
+    }
+
+    public void setPostText(String postText) {
+        this.postText = postText;
+    }
+
     public int getPostID() {
         return postID;
     }

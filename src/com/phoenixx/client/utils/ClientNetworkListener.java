@@ -27,6 +27,9 @@ public class ClientNetworkListener extends Listener {
         {
             SignInResponse response = (SignInResponse)object;
             LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject(), response.getPostDataObjects());
+
+            ClientData.loadedPosts.clear();
+            ClientData.setLoadedPosts(response.getPostDataObjects());
         }
 
         if(object instanceof PostDataResponse)
