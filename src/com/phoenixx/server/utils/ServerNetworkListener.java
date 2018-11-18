@@ -9,6 +9,7 @@ import com.phoenixx.packets.requests.CreatePostRequest;
 import com.phoenixx.packets.requests.PostDataRequest;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
+import com.phoenixx.packets.responses.CreatePostResponse;
 import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
@@ -91,12 +92,22 @@ public class ServerNetworkListener extends Listener
         if(object instanceof PostDataRequest)
         {
             PostDataRequest request = (PostDataRequest)object;
-
             PostDataResponse postDataResponse = new PostDataResponse();
 
-            postDataResponse.setPostDataObject(ServerNetworkMain.getDatabaseManager().getPostDataFromID(request.getPostID()));
-            postDataResponse.setPostOwnerObject(ServerNetworkMain.getDatabaseManager().getUserDataFromUUID(request.getUserUUID()));
-            ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+            switch (request.getRequestID())
+            {
+                case 1:
+                    postDataResponse.setResponseID(1);
+                    postDataResponse.setPostDataObject(ServerNetworkMain.getDatabaseManager().getPostDataFromID(request.getPostID()));
+                    postDataResponse.setPostOwnerObject(ServerNetworkMain.getDatabaseManager().getUserDataFromUUID(request.getUserUUID()));
+                    ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+                    break;
+                case 2:
+                    postDataResponse.setResponseID(2);
+                    postDataResponse.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
+                    ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+
+            }
         }
 
         if(object instanceof CreatePostRequest)
@@ -104,7 +115,17 @@ public class ServerNetworkListener extends Listener
             CreatePostRequest createPostRequest = (CreatePostRequest) object;
             PostDataObject postDataObject = createPostRequest.getPostDataObject();
 
-            ServerNetworkMain.getDatabaseManager().createNewPost(createPostRequest.getOwnerUUID(), createPostRequest.getOwnerName(), postDataObject.getTags(), postDataObject.getPostTile(), postDataObject.getPostText());
+            boolean postMade = ServerNetworkMain.getDatabaseManager().createNewPost(createPostRequest.getOwnerUUID(), createPostRequest.getOwnerName(), postDataObject.getTags(), postDataObject.getPostTile(), postDataObject.getPostText());
+
+            CreatePostResponse createPostResponse = new CreatePostResponse();
+
+            if(postMade)
+            {
+                createPostResponse.setPostCreationSuccessFull(true);
+                createPostResponse.setMessage("Post successfully created!");
+
+                ServerNetworkMain.server.sendToTCP(connectionID, createPostResponse);
+            }
         }
     }
 

@@ -1,10 +1,10 @@
-package com.phoenixx.client.utils;
+package com.phoenixx.client.handlers;
 
 import com.phoenixx.packets.objects.PostDataObject;
 
 import java.util.ArrayList;
 
-public class ClientData
+public class ClientDataHandler
 {
     public static ArrayList<PostDataObject> loadedPosts = new ArrayList<>();
 

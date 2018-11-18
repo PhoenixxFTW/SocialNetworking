@@ -18,8 +18,7 @@ public class DatabaseManager
 
     public void createDefaultTables()
     {
-        //TODO Add dateJoined
-        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, full_name TEXT, PRIMARY KEY (uuid));";
+        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, full_name TEXT, date_joined TIMESTAMP, profile_pic TEXT, PRIMARY KEY (uuid));";
         String CREATE_POSTS_TABLE = "CREATE TABLE IF NOT EXISTS PostData (post_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, owner_uuid varchar(50), date_created TIMESTAMP, tags TEXT, post_title TEXT, post_text MEDIUMTEXT);";
         String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
 
@@ -52,8 +51,10 @@ public class DatabaseManager
                         String studentNumber = results.getString(2);
                         String usernameFromDb = results.getString(3);
                         String fullNameFromDb = results.getString(6);
+                        String dateJoinedFromDb = results.getString(7);
+                        String profilePicFromDb = results.getString(8);
 
-                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb);
                     }
 
                 } catch (SQLException e) {
@@ -91,8 +92,10 @@ public class DatabaseManager
                         String studentNumber = results.getString(2);
                         String usernameFromDb = results.getString(3);
                         String fullNameFromDb = results.getString(6);
+                        String dateJoinedFromDb = results.getString(7);
+                        String profilePicFromDb = results.getString(8);
 
-                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb);
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb);
                     }
 
                 } catch (SQLException e) {
@@ -180,7 +183,7 @@ public class DatabaseManager
      */
     public void createNewUserInDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
     {
-        String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name) VALUES (?,?,?,?,?,?)";
+        String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name, date_joined) VALUES (?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(createNewUserStatement);
@@ -191,6 +194,7 @@ public class DatabaseManager
             preparedStatement.setString(4, email);
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, fullName);
+            preparedStatement.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
 
             this.database.sendPreparedStatement(preparedStatement, false);
         } catch (SQLException e) {
@@ -291,7 +295,7 @@ public class DatabaseManager
      * @param postTitle Name of the post
      * @param postText Actual text from the post
      */
-    public void createNewPost(String ownerUUID, String ownerName, String tags, String postTitle, String postText)
+    public boolean createNewPost(String ownerUUID, String ownerName, String tags, String postTitle, String postText)
     {
         String createNewUserStatement = "INSERT INTO postdata(owner_uuid,owner_name,date_created,tags,post_title,post_text) VALUES (?,?,?,?,?,?)";
 
@@ -306,8 +310,13 @@ public class DatabaseManager
             preparedStatement.setString(6, postText);
 
             this.database.sendPreparedStatement(preparedStatement, false);
+
+            return true;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        return false;
     }
 }

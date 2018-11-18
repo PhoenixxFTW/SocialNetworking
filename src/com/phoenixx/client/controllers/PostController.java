@@ -67,6 +67,7 @@ public class PostController implements Initializable
         System.out.println("Post text: " + postDataObject.getPostText());
 
         PostDataRequest request = new PostDataRequest();
+        request.setRequestID(1);
         request.setPostID(this.postDataObject.getPostID());
         request.setUserUUID(this.postDataObject.getOwnerUUID());
 

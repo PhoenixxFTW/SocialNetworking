@@ -2,10 +2,13 @@ package com.phoenixx.client.utils;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.phoenixx.client.controllers.CreatePostController;
 import com.phoenixx.client.controllers.HomeScreenController;
 import com.phoenixx.client.controllers.LoginController;
 import com.phoenixx.client.controllers.SignUpController;
+import com.phoenixx.client.handlers.ClientDataHandler;
 import com.phoenixx.client.network.ClientNetworkMain;
+import com.phoenixx.packets.responses.CreatePostResponse;
 import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
@@ -28,22 +31,39 @@ public class ClientNetworkListener extends Listener {
             SignInResponse response = (SignInResponse)object;
             LoginController.getInstance().setCanLogin(response.canLogin(), response.getClientUserObject(), response.getPostDataObjects());
 
-            ClientData.loadedPosts.clear();
-            ClientData.setLoadedPosts(response.getPostDataObjects());
+            ClientDataHandler.loadedPosts.clear();
+            ClientDataHandler.setLoadedPosts(response.getPostDataObjects());
         }
 
         if(object instanceof PostDataResponse)
         {
             PostDataResponse response = (PostDataResponse)object;
 
-            if(response != null && response.getPostDataObject() != null)
+            switch (response.getResponseID())
             {
-                try{
-                    HomeScreenController.getInstance().loadPost(response.getPostDataObject(), response.getPostOwnerObject());
-                } catch (NullPointerException ex) {
-                    ex.printStackTrace();
-                }
+                case 1:
+                    if(response.getPostDataObject() != null)
+                    {
+                        try{
+                            HomeScreenController.getInstance().loadPost(response.getPostDataObject(), response.getPostOwnerObject());
+                        } catch (NullPointerException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    break;
+                case 2:
+                    ClientDataHandler.loadedPosts.clear();
+                    ClientDataHandler.setLoadedPosts(response.getPostDataObjects());
+                    break;
+
             }
+        }
+
+        if(object instanceof CreatePostResponse)
+        {
+            CreatePostResponse response = (CreatePostResponse)object;
+
+            CreatePostController.getInstance().setPostCreated(response.isPostCreationSuccessFull());
         }
     }
 

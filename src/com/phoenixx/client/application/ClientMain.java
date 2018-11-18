@@ -23,7 +23,6 @@ public class ClientMain extends Application
     @Override
 	public void start(Stage primaryStage) {
 		try {
-		    //TODO Setup game loop, just like the one we have on the Server to update HomeScreen data every minute or so
 			parentWindow = primaryStage;
 
 			Parent root = FXMLLoader.load(getClass().getResource("/fxml/LoginScreen.fxml"));

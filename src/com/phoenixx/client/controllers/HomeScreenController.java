@@ -1,6 +1,7 @@
 package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import com.phoenixx.client.handlers.ClientDataHandler;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import javafx.application.Platform;
@@ -87,8 +88,12 @@ public class HomeScreenController implements Initializable
 
         this.fullName.setText(clientUser.getFullName());
 
-        //TODO Get image from ClientObject / Database
-        setProfilePic("https://i.imgur.com/rLTnjje.png");
+        if(clientUser.getProfilePicUrl() != null && !clientUser.getProfilePicUrl().isEmpty())
+        {
+            setProfilePic(clientUser.getProfilePicUrl());
+        }
+
+        //setProfilePic("https://i.imgur.com/rLTnjje.png");
     }
 
     public void handleMenuButtonClick(ActionEvent actionEvent)
@@ -107,6 +112,7 @@ public class HomeScreenController implements Initializable
         //FIXME Either remove this, OR be sure you clear ALL client data related to the last account logged in
         if(actionEvent.getSource()== signOutButton)
         {
+            ClientDataHandler.loadedPosts.clear();
             signOutButton.getScene().getWindow().hide();
 
             Stage login = new Stage();

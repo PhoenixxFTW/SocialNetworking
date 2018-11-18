@@ -9,6 +9,7 @@ import com.phoenixx.packets.requests.CreatePostRequest;
 import com.phoenixx.packets.requests.PostDataRequest;
 import com.phoenixx.packets.requests.SignInRequest;
 import com.phoenixx.packets.requests.SignUpRequest;
+import com.phoenixx.packets.responses.CreatePostResponse;
 import com.phoenixx.packets.responses.PostDataResponse;
 import com.phoenixx.packets.responses.SignInResponse;
 import com.phoenixx.packets.responses.SignUpResponse;
@@ -42,6 +43,7 @@ public class PacketRegistry extends Listener
         kryo.register(SignUpResponse.class);
         kryo.register(SignInResponse.class);
         kryo.register(PostDataResponse.class);
+        kryo.register(CreatePostResponse.class);
 
         /** Objects */
         kryo.register(SignUpObject.class);

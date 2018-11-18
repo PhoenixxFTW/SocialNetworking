@@ -1,9 +1,11 @@
 package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import com.phoenixx.client.utils.ClientData;
+import com.phoenixx.client.application.ClientMain;
+import com.phoenixx.client.handlers.ClientDataHandler;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
+import com.phoenixx.packets.requests.PostDataRequest;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,6 +98,11 @@ public class ReadPostScreen implements Initializable
 
     public void handleBackButtonClick(MouseEvent mouseEvent)
     {
+        PostDataRequest request = new PostDataRequest();
+        request.setRequestID(2);
+
+        ClientMain.getNetworkManager().sendMessageToServer(request);
+
         Parent root = null;
         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/HomeScreen.fxml"));
@@ -103,7 +110,7 @@ public class ReadPostScreen implements Initializable
 
             HomeScreenController homeScreenController = loader.getController();
             homeScreenController.setClientUser(clientUserObject);
-            homeScreenController.setupPosts(ClientData.loadedPosts);
+            homeScreenController.setupPosts(ClientDataHandler.loadedPosts);
 
         } catch (IOException e){
             e.printStackTrace();

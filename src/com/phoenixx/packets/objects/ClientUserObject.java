@@ -9,6 +9,9 @@ public class ClientUserObject
     private String fullName;
     private String studentNumber;
 
+    private String profilePicUrl;
+    private String dateJoined;
+
     private boolean isOnline = false;
 
     /** User rank */
@@ -28,12 +31,14 @@ public class ClientUserObject
 
     }
 
-    public ClientUserObject(String uuid, String studentNumber, String username, String fullName)
+    public ClientUserObject(String uuid, String studentNumber, String username, String fullName, String dateJoined, String profilePicUrl)
     {
         this.uuid = uuid;
         this.username = username;
         this.fullName = fullName;
         this.studentNumber = studentNumber;
+        this.dateJoined = dateJoined;
+        this.profilePicUrl = profilePicUrl;
     }
 
     public void setUuid(String uuid) {
@@ -66,6 +71,14 @@ public class ClientUserObject
 
     public String getStudentNumber() {
         return studentNumber;
+    }
+
+    public String getDateJoined() {
+        return dateJoined;
+    }
+
+    public String getProfilePicUrl() {
+        return profilePicUrl;
     }
 
     public boolean isOnline() {

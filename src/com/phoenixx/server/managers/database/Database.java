@@ -1,6 +1,9 @@
 package com.phoenixx.server.managers.database;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -120,18 +123,6 @@ public class Database {
         } catch (SQLException e) {
             return false;
         }
-    }
-
-    public void createDefaultTables()
-    {
-        //TODO Add dateJoined
-        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, PRIMARY KEY (uuid));";
-        String CREATE_USERPROFILE_TABLE = "CREATE TABLE IF NOT EXISTS UserProfile (uuid varchar(45) NOT NULL, status TEXT, mood TEXT, clanTag varchar(4), profileShowcase JSON, PRIMARY KEY (uuid));";
-        String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
-
-        sendPreparedStatement(CREATE_USERS_TABLE, false);
-        //database.sendPreparedStatement(CREATE_USERPROFILE_TABLE, false);
-        //database.sendPreparedStatement(CREATE_USERFRIENDS_TABLE, false);
     }
 
     public Connection getConnection()
