@@ -18,9 +18,9 @@ public class DatabaseManager
 
     public void createDefaultTables()
     {
-        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, full_name TEXT, date_joined TIMESTAMP, profile_pic TEXT, PRIMARY KEY (uuid));";
+        String CREATE_USERS_TABLE = "CREATE TABLE IF NOT EXISTS UserData (uuid varchar(50) NOT NULL, student_number varchar(20), username TEXT, email TEXT, password TEXT, full_name TEXT, date_joined TIMESTAMP, profile_pic TEXT, mood VARCHAR(300), PRIMARY KEY (uuid));";
         String CREATE_POSTS_TABLE = "CREATE TABLE IF NOT EXISTS PostData (post_id int NOT NULL PRIMARY KEY AUTO_INCREMENT, owner_uuid varchar(50), date_created TIMESTAMP, tags TEXT, post_title TEXT, post_text MEDIUMTEXT);";
-        String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
+        //String CREATE_USERFRIENDS_TABLE = "CREATE TABLE IF NOT EXISTS UserFriends (uuid varchar(45) NOT NULL, friends JSON, pendingFriends JSON, PRIMARY KEY (uuid));";
 
         this.database.sendPreparedStatement(CREATE_USERS_TABLE, false);
         this.database.sendPreparedStatement(CREATE_POSTS_TABLE, false);
@@ -53,8 +53,9 @@ public class DatabaseManager
                         String fullNameFromDb = results.getString(6);
                         String dateJoinedFromDb = results.getString(7);
                         String profilePicFromDb = results.getString(8);
+                        String moodFromDb = results.getString(9);
 
-                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb);
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb, moodFromDb);
                     }
 
                 } catch (SQLException e) {
@@ -94,8 +95,9 @@ public class DatabaseManager
                         String fullNameFromDb = results.getString(6);
                         String dateJoinedFromDb = results.getString(7);
                         String profilePicFromDb = results.getString(8);
+                        String moodFromDb = results.getString(9);
 
-                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb);
+                        return new ClientUserObject(uuid, studentNumber, usernameFromDb, fullNameFromDb, dateJoinedFromDb, profilePicFromDb, moodFromDb);
                     }
 
                 } catch (SQLException e) {
@@ -183,7 +185,7 @@ public class DatabaseManager
      */
     public void createNewUserInDB(String uuid, String studentNumber, String username, String email, String password, String fullName)
     {
-        String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name, date_joined) VALUES (?,?,?,?,?,?,?)";
+        String createNewUserStatement = "INSERT INTO userdata(uuid,student_number,username,email,password,full_name, date_joined, mood) VALUES (?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(createNewUserStatement);
@@ -195,6 +197,7 @@ public class DatabaseManager
             preparedStatement.setString(5, password);
             preparedStatement.setString(6, fullName);
             preparedStatement.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+            preparedStatement.setString(8, "This is the default status text. You can have up to 300 characters here :D");
 
             this.database.sendPreparedStatement(preparedStatement, false);
         } catch (SQLException e) {

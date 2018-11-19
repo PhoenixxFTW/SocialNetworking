@@ -40,6 +40,9 @@ public class HomeScreenController implements Initializable
     private Label fullName;
 
     @FXML
+    private Button profileButton;
+
+    @FXML
     private Button homeButton;
 
     @FXML
@@ -98,6 +101,25 @@ public class HomeScreenController implements Initializable
 
     public void handleMenuButtonClick(ActionEvent actionEvent)
     {
+        if(actionEvent.getSource() == profileButton)
+        {
+            Parent root = null;
+            try{
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileScreen.fxml"));
+                root = loader.load();
+
+                ProfileScreenController profileScreenController = loader.getController();
+                profileScreenController.setupUser(clientUserObject, clientUserObject);
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            try{
+                anchorPane.getChildren().setAll(root);
+            }catch (NullPointerException ex){
+                ex.printStackTrace();
+            }
+        }
         if (actionEvent.getSource() == homeButton) {
 
             System.out.println("Home button pressed!!!");
@@ -214,7 +236,8 @@ public class HomeScreenController implements Initializable
                 ReadPostScreen readPostScreen = loader.getController();
                 if(postOwnerObject != null)
                 {
-                    readPostScreen.setClientUser(postOwnerObject);
+                    readPostScreen.setPostOwner(postOwnerObject);
+                    readPostScreen.setClientUser(clientUserObject);
                 } else {
                     System.out.println("POST OWNER WAS NULL");
                 }

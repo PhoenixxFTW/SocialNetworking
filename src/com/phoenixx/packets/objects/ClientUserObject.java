@@ -11,14 +11,12 @@ public class ClientUserObject
 
     private String profilePicUrl;
     private String dateJoined;
+    private String mood = "This is the default status text. You can have up to 300 characters here :D";
 
     private boolean isOnline = false;
 
     /** User rank */
     //public UserRank currentRank = UserRank.STUDENT;
-
-    /** The users status set up in there profile */
-    public String mood = "I am a newb, tehe :D";
 
     /** List of friends this player has */
     public ArrayList<String> friendsList = new ArrayList<String>();
@@ -31,7 +29,7 @@ public class ClientUserObject
 
     }
 
-    public ClientUserObject(String uuid, String studentNumber, String username, String fullName, String dateJoined, String profilePicUrl)
+    public ClientUserObject(String uuid, String studentNumber, String username, String fullName, String dateJoined, String profilePicUrl, String mood)
     {
         this.uuid = uuid;
         this.username = username;
@@ -39,6 +37,7 @@ public class ClientUserObject
         this.studentNumber = studentNumber;
         this.dateJoined = dateJoined;
         this.profilePicUrl = profilePicUrl;
+        this.mood = mood;
     }
 
     public void setUuid(String uuid) {
@@ -55,6 +54,18 @@ public class ClientUserObject
 
     public void setStudentNumber(String studentNumber) {
         studentNumber = studentNumber;
+    }
+
+    public void setDateJoined(String dateJoined) {
+        this.dateJoined = dateJoined;
+    }
+
+    public void setProfilePicUrl(String profilePicUrl) {
+        this.profilePicUrl = profilePicUrl;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
     }
 
     public String getUuid() {
@@ -79,6 +90,10 @@ public class ClientUserObject
 
     public String getProfilePicUrl() {
         return profilePicUrl;
+    }
+
+    public String getMood() {
+        return mood;
     }
 
     public boolean isOnline() {

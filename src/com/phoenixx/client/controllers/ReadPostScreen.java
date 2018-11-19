@@ -55,6 +55,7 @@ public class ReadPostScreen implements Initializable
     @FXML
     private Label tags_text;
 
+    private ClientUserObject postOwnerObject;
     private ClientUserObject clientUserObject;
     private PostDataObject postDataObject;
 
@@ -68,13 +69,18 @@ public class ReadPostScreen implements Initializable
         this.homeScreenAnchorPane = homeScreenAnchorPane;
     }
 
-    public void setClientUser(ClientUserObject clientUser)
+    public void setPostOwner(ClientUserObject clientUser)
     {
-        this.clientUserObject = clientUser;
+        this.postOwnerObject = clientUser;
 
         this.authorName_button.setText(clientUser.getFullName());
         this.authorUsername_button.setText(clientUser.getUsername());
         this.authorUuid_button.setText(clientUser.getUuid());
+    }
+
+    public void setClientUser(ClientUserObject clientUser)
+    {
+        this.clientUserObject = clientUser;
     }
 
     public void setPostData(PostDataObject postData)
@@ -92,8 +98,24 @@ public class ReadPostScreen implements Initializable
 
     public void handleAuthorClicked(MouseEvent mouseEvent)
     {
-        //TODO Get author data and then load a profile screen
         System.out.println("Author buttons clicked!");
+
+        Parent root = null;
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ProfileScreen.fxml"));
+            root = loader.load();
+
+            ProfileScreenController profileScreenController = loader.getController();
+            profileScreenController.setupUser(clientUserObject, postOwnerObject);
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        try{
+            anchorPane.getChildren().setAll(root);
+        }catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
     }
 
     public void handleBackButtonClick(MouseEvent mouseEvent)
@@ -109,7 +131,7 @@ public class ReadPostScreen implements Initializable
             root = loader.load();
 
             HomeScreenController homeScreenController = loader.getController();
-            homeScreenController.setClientUser(clientUserObject);
+            homeScreenController.setClientUser(postOwnerObject);
             homeScreenController.setupPosts(ClientDataHandler.loadedPosts);
 
         } catch (IOException e){

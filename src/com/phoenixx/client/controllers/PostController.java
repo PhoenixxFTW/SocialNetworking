@@ -57,15 +57,6 @@ public class PostController implements Initializable
 
     public void onPostClicked(MouseEvent mouseEvent)
     {
-        System.out.println("@@@@@@@@@@@@@@@@ CLICKED ON @@@@@@@@@@@@@@@@");
-        System.out.println("Post ID: " + postDataObject.getPostID());
-        System.out.println("Owner UUID: " + postDataObject.getOwnerUUID());
-        System.out.println("Owner UUID: " + postDataObject.getOwnerName());
-        System.out.println("Date Created: " + postDataObject.getDateCreated());
-        System.out.println("Tags: " + postDataObject.getTags());
-        System.out.println("Post Title: " + postDataObject.getPostTile());
-        System.out.println("Post text: " + postDataObject.getPostText());
-
         PostDataRequest request = new PostDataRequest();
         request.setRequestID(1);
         request.setPostID(this.postDataObject.getPostID());
