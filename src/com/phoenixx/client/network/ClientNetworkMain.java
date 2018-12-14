@@ -17,9 +17,9 @@ public class ClientNetworkMain
     public static boolean hasShownDisconnectNotification = false;
     public static boolean hasShowConnectNotification = false;
 
-    public static final String NETWORK_IP = "127.0.0.1";
-    public static final int NETWORK_TCP_PORT = 2273;
-    public static final int NETWORK_UDP_PORT = 4625;
+    private static final String NETWORK_IP = "127.0.0.1";
+    private static final int NETWORK_TCP_PORT = 2273;
+    private static final int NETWORK_UDP_PORT = 4625;
 
     private ClientNetworkMain()
     {

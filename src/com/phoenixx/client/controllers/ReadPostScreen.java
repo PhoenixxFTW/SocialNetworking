@@ -131,7 +131,7 @@ public class ReadPostScreen implements Initializable
             root = loader.load();
 
             HomeScreenController homeScreenController = loader.getController();
-            homeScreenController.setClientUser(postOwnerObject);
+            homeScreenController.setClientUser(clientUserObject);
             homeScreenController.setupPosts(ClientDataHandler.loadedPosts);
 
         } catch (IOException e){

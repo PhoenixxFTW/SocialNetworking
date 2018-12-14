@@ -58,7 +58,7 @@ public class ServerNetworkListener extends Listener
                 ServerNetworkMain.server.sendToTCP(connectionID, response);
 
             } else {
-                System.out.println("SIGN UP OBJECT WAS NULL WHAT THE FUCK");
+                System.out.println("SIGN UP OBJECT WAS NULL");
             }
         }
 
@@ -106,6 +106,7 @@ public class ServerNetworkListener extends Listener
                     postDataResponse.setResponseID(2);
                     postDataResponse.setPostDataObjects(ServerNetworkMain.getDatabaseManager().getLatestPostData());
                     ServerNetworkMain.server.sendToTCP(connectionID, postDataResponse);
+                    break;
 
             }
         }

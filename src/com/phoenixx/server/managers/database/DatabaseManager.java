@@ -165,6 +165,7 @@ public class DatabaseManager
             } catch (SQLException e)
                 {
                     System.out.println("FAILED TO CHECK IF USER EXISTS");
+
                     e.printStackTrace();
                 }
             }

@@ -23,7 +23,7 @@ public class Notification {
     }
 
     public static void sendNotification(String user, String message) {
-        sendNotification(user, message, "Counter Craft");
+        sendNotification(user, message, "Management Server");
     }
 
     public static void sendNotification(String user, String message, String sender) {
