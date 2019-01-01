@@ -104,7 +104,8 @@ public class LoginController implements Initializable {
 
                 ClientMain.getNetworkManager().sendMessageToServer(request);
             } else {
-                //TODO Display missing entry text
+                noUserFound.setVisible(true);
+                noUserFound.setText("Missing Entry!");
             }
 
         } else {

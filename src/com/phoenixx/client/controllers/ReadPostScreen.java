@@ -2,10 +2,12 @@ package com.phoenixx.client.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.phoenixx.client.application.ClientMain;
+import com.phoenixx.client.handlers.AlertHandler;
 import com.phoenixx.client.handlers.ClientDataHandler;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.requests.PostDataRequest;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -47,6 +49,9 @@ public class ReadPostScreen implements Initializable
     private JFXButton authorUuid_button;
 
     @FXML
+    private JFXButton deletePostButton;
+
+    @FXML
     private Label postID_text;
 
     @FXML
@@ -69,18 +74,25 @@ public class ReadPostScreen implements Initializable
         this.homeScreenAnchorPane = homeScreenAnchorPane;
     }
 
-    public void setPostOwner(ClientUserObject clientUser)
+    public void setPostOwner(ClientUserObject postOwner)
     {
-        this.postOwnerObject = clientUser;
+        this.postOwnerObject = postOwner;
 
-        this.authorName_button.setText(clientUser.getFullName());
-        this.authorUsername_button.setText(clientUser.getUsername());
-        this.authorUuid_button.setText(clientUser.getUuid());
+        this.authorName_button.setText(postOwner.getFullName());
+        this.authorUsername_button.setText(postOwner.getUsername());
+        this.authorUuid_button.setText(postOwner.getUuid());
+
     }
 
     public void setClientUser(ClientUserObject clientUser)
     {
         this.clientUserObject = clientUser;
+
+        if(clientUser.getUuid().equals(postOwnerObject.getUuid()))
+        {
+            deletePostButton.setVisible(true);
+            deletePostButton.setDisable(false);
+        }
     }
 
     public void setPostData(PostDataObject postData)
@@ -142,5 +154,10 @@ public class ReadPostScreen implements Initializable
         }catch (NullPointerException ex){
             ex.printStackTrace();
         }
+    }
+
+    public void onDeleteClicked(ActionEvent actionEvent)
+    {
+        System.out.println("Delete post button was clicked!");
     }
 }

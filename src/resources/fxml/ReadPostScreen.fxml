@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
@@ -7,6 +11,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1196.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.ReadPostScreen">
    <children>
       <Label layoutX="468.0" layoutY="21.0" text="Phoenix" textFill="#2196f3">
@@ -29,9 +34,9 @@
                      </font>
                   </Label>
                   <Label text="Author name: " textFill="WHITE" translateX="5.0" translateY="5.0" />
-                  <JFXButton fx:id="authorName_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="169.0" text="ERROR" textFill="#c9c9c9" translateX="75.0" translateY="-16.0" />
+                  <JFXButton fx:id="authorName_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="169.0" text="ERROR" textFill="#c9c9c9" translateX="80.0" translateY="-16.0" />
                   <Label text="Author username: " textFill="WHITE" translateX="5.0" translateY="5.0" />
-                  <JFXButton fx:id="authorUsername_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="138.0" text="ERROR" textFill="#c9c9c9" translateX="100.0" translateY="-16.0" />
+                  <JFXButton fx:id="authorUsername_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="138.0" text="ERROR" textFill="#c9c9c9" translateX="107.0" translateY="-16.0" />
                   <Label text="Author uuid: " textFill="WHITE" translateX="5.0" translateY="5.0" />
                   <JFXButton fx:id="authorUuid_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="172.0" text="ERROR" textFill="#c9c9c9" translateX="73.0" translateY="-16.0" />
                </children>
@@ -51,9 +56,9 @@
                   <Label text="Post ID: " textFill="WHITE" translateX="5.0" translateY="5.0" />
                   <Label text="Date Created: " textFill="WHITE" translateX="5.0" translateY="30.0" />
                   <Label text="Tag(s): " textFill="WHITE" translateX="5.0" translateY="55.0" />
-                  <Label fx:id="postID_text" text="ERROR" textFill="#c9c9c9" translateX="50.0" translateY="-46.0" />
-                  <Label fx:id="dateCreated_text" text="ERROR" textFill="#c9c9c9" translateX="82.0" translateY="-21.0" />
-                  <Label fx:id="tags_text" text="ERROR" textFill="#c9c9c9" translateX="43.0" translateY="5.0" />
+                  <Label fx:id="postID_text" text="ERROR" textFill="#c9c9c9" translateX="55.0" translateY="-46.0" />
+                  <Label fx:id="dateCreated_text" text="ERROR" textFill="#c9c9c9" translateX="93.0" translateY="-21.0" />
+                  <Label fx:id="tags_text" text="ERROR" textFill="#c9c9c9" translateX="52.0" translateY="5.0" />
                </children>
             </VBox>
          </children>
@@ -76,12 +81,17 @@
       </ScrollPane>
       <JFXButton fx:id="backButton" layoutX="19.0" layoutY="8.0" onMouseClicked="#handleBackButtonClick" prefHeight="51.0" prefWidth="44.0">
          <graphic>
-            <ImageView>
+            <ImageView fitHeight="48.0" fitWidth="53.0">
                <image>
-                  <Image url="@../icons/BackIcon.png" />
+                  <Image url="@../images/Arrow_left.png" />
                </image>
             </ImageView>
          </graphic>
+      </JFXButton>
+      <JFXButton fx:id="deletePostButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1013.0" layoutY="25.0" onAction="#onDeleteClicked" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="169.0" text="DELETE" textFill="#e81e1e" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
       </JFXButton>
    </children>
 </AnchorPane>
