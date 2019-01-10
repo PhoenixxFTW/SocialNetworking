@@ -323,4 +323,28 @@ public class DatabaseManager
 
         return false;
     }
+
+    /**
+     * Deletes a post using its postID
+     * @param postID ID of the post that needs to be deleted
+     * @return
+     */
+    public boolean deletePost(int postID)
+    {
+        String postDeleteStatementSQL = "DELETE FROM postdata where post_id = ?";
+        try{
+
+            PreparedStatement preparedStatement = this.database.getConnection().prepareStatement(postDeleteStatementSQL);
+            preparedStatement.setInt(1, postID);
+            this.database.sendPreparedStatement(preparedStatement, false);
+
+            return true;
+
+        } catch (SQLException ex) {
+            System.out.println("FAILED TO DELETE POST WITH ID: " + postID);
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
 }

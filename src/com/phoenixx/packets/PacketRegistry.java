@@ -5,14 +5,8 @@ import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.objects.SignUpObject;
-import com.phoenixx.packets.requests.CreatePostRequest;
-import com.phoenixx.packets.requests.PostDataRequest;
-import com.phoenixx.packets.requests.SignInRequest;
-import com.phoenixx.packets.requests.SignUpRequest;
-import com.phoenixx.packets.responses.CreatePostResponse;
-import com.phoenixx.packets.responses.PostDataResponse;
-import com.phoenixx.packets.responses.SignInResponse;
-import com.phoenixx.packets.responses.SignUpResponse;
+import com.phoenixx.packets.requests.*;
+import com.phoenixx.packets.responses.*;
 
 import java.util.*;
 
@@ -38,12 +32,14 @@ public class PacketRegistry extends Listener
         kryo.register(SignUpRequest.class);
         kryo.register(PostDataRequest.class);
         kryo.register(CreatePostRequest.class);
+        kryo.register(GeneralRequest.class);
 
         /** Server packets */
         kryo.register(SignUpResponse.class);
         kryo.register(SignInResponse.class);
         kryo.register(PostDataResponse.class);
         kryo.register(CreatePostResponse.class);
+        kryo.register(GeneralResponse.class);
 
         /** Objects */
         kryo.register(SignUpObject.class);

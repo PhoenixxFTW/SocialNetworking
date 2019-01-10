@@ -5,14 +5,8 @@ import com.esotericsoftware.kryonet.Listener;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
 import com.phoenixx.packets.objects.SignUpObject;
-import com.phoenixx.packets.requests.CreatePostRequest;
-import com.phoenixx.packets.requests.PostDataRequest;
-import com.phoenixx.packets.requests.SignInRequest;
-import com.phoenixx.packets.requests.SignUpRequest;
-import com.phoenixx.packets.responses.CreatePostResponse;
-import com.phoenixx.packets.responses.PostDataResponse;
-import com.phoenixx.packets.responses.SignInResponse;
-import com.phoenixx.packets.responses.SignUpResponse;
+import com.phoenixx.packets.requests.*;
+import com.phoenixx.packets.responses.*;
 import com.phoenixx.server.ServerNetworkMain;
 
 public class ServerNetworkListener extends Listener
@@ -126,6 +120,22 @@ public class ServerNetworkListener extends Listener
                 createPostResponse.setMessage("Post successfully created!");
 
                 ServerNetworkMain.server.sendToTCP(connectionID, createPostResponse);
+            }
+        }
+
+        if(object instanceof GeneralRequest)
+        {
+            GeneralRequest generalRequest = (GeneralRequest) object;
+
+            boolean postDeleted = ServerNetworkMain.getDatabaseManager().deletePost(Integer.valueOf(generalRequest.getData()));
+
+            if(postDeleted)
+            {
+                GeneralResponse generalResponse = new GeneralResponse();
+                generalResponse.setResponseID(1);
+                generalResponse.setResponseData("Post successfully deleted!");
+
+                ServerNetworkMain.server.sendToTCP(connectionID, generalResponse);
             }
         }
     }

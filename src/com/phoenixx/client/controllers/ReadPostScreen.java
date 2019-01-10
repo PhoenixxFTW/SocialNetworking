@@ -4,8 +4,10 @@ import com.jfoenix.controls.JFXButton;
 import com.phoenixx.client.application.ClientMain;
 import com.phoenixx.client.handlers.AlertHandler;
 import com.phoenixx.client.handlers.ClientDataHandler;
+import com.phoenixx.client.network.ClientNetworkMain;
 import com.phoenixx.packets.objects.ClientUserObject;
 import com.phoenixx.packets.objects.PostDataObject;
+import com.phoenixx.packets.requests.GeneralRequest;
 import com.phoenixx.packets.requests.PostDataRequest;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -158,6 +160,14 @@ public class ReadPostScreen implements Initializable
 
     public void onDeleteClicked(ActionEvent actionEvent)
     {
-        System.out.println("Delete post button was clicked!");
+        if(clientUserObject.getUuid().equalsIgnoreCase(postOwnerObject.getUuid()))
+        {
+            System.out.println("Delete post button was clicked!");
+            GeneralRequest generalRequest = new GeneralRequest();
+            generalRequest.setRequestID(1);
+            generalRequest.setData(String.valueOf(postDataObject.getPostID()));
+
+            ClientMain.getNetworkManager().sendMessageToServer(generalRequest);
+        }
     }
 }
