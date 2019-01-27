@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1196.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.ReadPostScreen">
+   <children>
+      <Label layoutX="468.0" layoutY="21.0" text="Phoenix" textFill="#2196f3">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="591.0" layoutY="21.0" text=" Studios" textFill="#a0a2ab">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <HBox layoutY="72.0" prefHeight="145.0" prefWidth="1196.0" style="-fx-background-color: #161C28;">
+         <children>
+            <VBox prefHeight="76.0" prefWidth="242.0" style="-fx-background-color: #1A1D27;">
+               <children>
+                  <Label text="Author Information" textFill="WHITE" translateX="65.0" underline="true">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Author name: " textFill="WHITE" translateX="5.0" translateY="5.0" />
+                  <JFXButton fx:id="authorName_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="169.0" text="ERROR" textFill="#c9c9c9" translateX="80.0" translateY="-16.0" />
+                  <Label text="Author username: " textFill="WHITE" translateX="5.0" translateY="5.0" />
+                  <JFXButton fx:id="authorUsername_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="138.0" text="ERROR" textFill="#c9c9c9" translateX="107.0" translateY="-16.0" />
+                  <Label text="Author uuid: " textFill="WHITE" translateX="5.0" translateY="5.0" />
+                  <JFXButton fx:id="authorUuid_button" alignment="TOP_LEFT" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="172.0" text="ERROR" textFill="#c9c9c9" translateX="73.0" translateY="-16.0" />
+               </children>
+            </VBox>
+            <Label fx:id="postTitle_text" alignment="CENTER" prefHeight="51.0" prefWidth="715.0" text="Post title" textFill="WHITE" translateY="40.0">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="76.0" prefWidth="242.0" style="-fx-background-color: #1A1D27;">
+               <children>
+                  <Label alignment="TOP_CENTER" prefHeight="19.0" prefWidth="242.0" text="Post Information" textFill="WHITE" underline="true">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <Label text="Post ID: " textFill="WHITE" translateX="5.0" translateY="5.0" />
+                  <Label text="Date Created: " textFill="WHITE" translateX="5.0" translateY="30.0" />
+                  <Label text="Tag(s): " textFill="WHITE" translateX="5.0" translateY="55.0" />
+                  <Label fx:id="postID_text" text="ERROR" textFill="#c9c9c9" translateX="55.0" translateY="-46.0" />
+                  <Label fx:id="dateCreated_text" text="ERROR" textFill="#c9c9c9" translateX="93.0" translateY="-21.0" />
+                  <Label fx:id="tags_text" text="ERROR" textFill="#c9c9c9" translateX="52.0" translateY="5.0" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <ScrollPane fx:id="postScroll_pane" layoutY="217.0" prefHeight="451.0" prefWidth="1196.0" style="-fx-background-color: transparent;;" stylesheets="@../css/HomeScreenStyle.css">
+         <content>
+            <VBox fx:id="postListPane" prefHeight="448.0" prefWidth="1194.0" spacing="5.0" style="-fx-background-color: #2D3447;">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <children>
+                  <Text fx:id="post_text" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="ERROR" wrappingWidth="1181.70458984375">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <JFXButton fx:id="backButton" layoutX="19.0" layoutY="8.0" onMouseClicked="#handleBackButtonClick" prefHeight="51.0" prefWidth="44.0">
+         <graphic>
+            <ImageView fitHeight="48.0" fitWidth="53.0">
+               <image>
+                  <Image url="@../images/Arrow_left.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+      <JFXButton fx:id="deletePostButton" alignment="CENTER" contentDisplay="CENTER" disable="true" layoutX="1013.0" layoutY="25.0" onAction="#onDeleteClicked" onMouseClicked="#handleAuthorClicked" prefHeight="25.0" prefWidth="169.0" text="DELETE" textFill="#e81e1e" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
