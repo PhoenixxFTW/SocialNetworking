@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="668.0" prefWidth="1183.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phoenixx.client.controllers.HomeScreenController">
+   <children>
+      <Label layoutX="589.0" layoutY="21.0" text="Phoenix" textFill="#2196f3">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="712.0" layoutY="21.0" text=" Studios" textFill="#a0a2ab">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="675.0" prefWidth="281.0" style="-fx-background-color: #1E2536;">
+         <children>
+            <ImageView fx:id="profilePic" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" translateX="90.0" translateY="50.0">
+               <image>
+                  <Image url="@../icons/Warning_Icon.png" />
+               </image>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </ImageView>
+            <Label fx:id="fullName" alignment="CENTER" contentDisplay="CENTER" prefHeight="24.0" prefWidth="278.0" text="Error" textAlignment="RIGHT" textFill="#e7e5e5" translateY="60.0" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button fx:id="homeButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="283.0" stylesheets="@../css/HomeScreenStyle.css" text="Home" translateY="150.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/HomeIcon_32x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="friendsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="291.0" stylesheets="@../css/HomeScreenStyle.css" text="Friends" translateY="150.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/FriendsIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="settingsButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="287.0" stylesheets="@../css/HomeScreenStyle.css" text="Settings" translateY="150.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/SettingsIcon_32x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="signOutButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="279.0" stylesheets="@../css/HomeScreenStyle.css" text="Sign Out" translateY="150.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/SignOutIcon_32x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+            <Button fx:id="profileButton" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleMenuButtonClick" prefHeight="42.0" prefWidth="283.0" stylesheets="@../css/HomeScreenStyle.css" text="Profile" translateY="-60.0">
+               <graphic>
+                  <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/PersonIcon_32x.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets left="50.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+      <ScrollPane fx:id="postsPane" hbarPolicy="NEVER" layoutX="278.0" layoutY="242.0" prefHeight="435.0" prefWidth="906.0" style="-fx-background-color: transparent;;" stylesheets="@../css/HomeScreenStyle.css">
+         <content>
+            <VBox fx:id="postListPane" prefHeight="432.0" prefWidth="904.0" spacing="5.0" style="-fx-background-color: #2D3447;">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      <JFXButton id="createPostButton" fx:id="createPostButton" layoutX="283.0" layoutY="182.0" onAction="#handleCreatePostButton" prefHeight="51.0" prefWidth="893.0" style="-fx-border-color: #B3B1B1; -fx-border-style: segments(5, 5, 5, 5) line-cap round;" styleClass="jfx-button" stylesheets="@../css/HomeScreenStyle.css" text="Create Post" textFill="#f5f5f5" underline="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
